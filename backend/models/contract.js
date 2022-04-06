@@ -8,8 +8,22 @@ class contract {
         this.disconnect();
     }
 
-    async fetchAllSpaces () {
+    async fetchAllSpaces() {
         const results = await this.DBQuery("SELECT * FROM Contract");
+        return results;
+    }
+
+    async createNewContract(body) {
+
+    }
+
+    async getContractsByOwner(owner) {
+        const results = await this.DBQuery("SELECT * FROM Contract WHERE owner = ?", [owner]);
+        return results;
+    }
+
+    async getContractsByRenter(renter) {
+        const results = await this.DBQuery("SELECT * FROM Contract WHERE renter = ?", [renter]);
         return results;
     }
 }

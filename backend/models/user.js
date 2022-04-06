@@ -29,6 +29,18 @@ const authenticateUser = async (username, password) => {
     return validPassword;
 };
 
+const updateUserEmail = async (username, email) => {
+    //const results = knex(USER_TABLE).
+};
+
+const updateUserPhone = async (username, phone) => {
+
+};
+
+const updateUserImage = async (username, image) => {
+
+};
+
 module.exports = {
     createNewUser,
     findUserByUsername,

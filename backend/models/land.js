@@ -8,9 +8,37 @@ class land {
         this.disconnect();
     }
 
-    async fetchAllSpaces () {
+    async fetchAllSpaces() {
         const results = await this.DBQuery("SELECT * FROM Bid");
         return results;
+    }
+
+    async updateLandDescription(id, description) {
+        
+    }
+
+    async updateIsAvailable(id, available) {
+
+    }
+
+    async updateImage(id, image) {
+
+    }
+
+    async getLandByLocation(lat, long) {
+
+    }
+
+    async getLandByAcres(acres) {
+
+    }
+
+    async getLandByOwner(owner) {
+
+    }
+
+    async getLandBySuitability(suitable) {
+
     }
 }
 
