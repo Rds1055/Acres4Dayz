@@ -1,3 +1,4 @@
+
 const connectToDatabase = require('../models/database-helpers.js');
 const User = require('../models/users');
 const Bid = require('../models/bid');
@@ -16,13 +17,21 @@ const createModelsMiddleware = async (req, res, next) => {
     console.log('Creating models in middleware');
     const { DBQuery, disconnect } = await connectToDatabase();
     req.models = {
-        user: User,
+
         bid: new Bid(DBQuery, disconnect),
         contract: new Contract(DBQuery, disconnect),
         land: new Land(DBQuery, disconnect),
-        review: new Review(DBQuery, disconnect)
+        review: new Review(DBQuery, disconnect),
+        user: new User(DBQuery, disconnect)
+
     }
     req.disconnect = disconnect;
+    next();
+}
+
+const disconnectFromDatababaseMiddleware = (req, res, next) => {
+    console.log('Disconnecting from the database');
+    req.disconnect();
     next();
 }
 
