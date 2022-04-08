@@ -8,22 +8,52 @@ class land {
         this.disconnect();
     }
 
-    async updateLandDescription(id, description) {
-        results = await this.DBQuery("UPDATE Land SET description = ? WHERE ID = ?", [description, id]);
+    async createNewLand(body) {
+        const acres = body.acres;
+        const available = body.available;
+        const owner = body.owner;
+        const description = body.description;
+        const lat = body.lat;
+        const long = body.long;
+        const suitable = body.suitable;
+        const bid = body.bid;
+        const image = body.image;
+    }
+
+    async deleteLand(id) {
+        const result = this.DBQuery("DELETE FROM Land WHERE ID = ?", [id]);
+        return result;
+    }
+
+    async updateLand(id, body) {
+        const description = body.description;
+        const available = body.available;
+        const image = body.image;
+
+        if (description !== undefined) {
+            this.updateDescription(id, description);
+        }
+        if (available !== undefined) {
+            this.updateIsAvailable(id, available);
+        }
+        if (image !== undefined) {
+            this.updateImage(id, image);
+        }
+
         const newRecord = await this.DBQuery("SELECT * FROM Land WHERE ID = ?", [id]);
         return newRecord;
+    }
+
+    async updateDescription(id, description) {
+        results = await this.DBQuery("UPDATE Land SET description = ? WHERE ID = ?", [description, id]);
     }
 
     async updateIsAvailable(id, available) {
         results = await this.DBQuery("UPDATE Land SET is_available = ? WHERE ID = ?", [available, id]);
-        const newRecord = await this.DBQuery("SELECT * FROM Land WHERE ID = ?", [id]);
-        return newRecord;
     }
 
     async updateImage(id, image) {
         results = await this.DBQuery("UPDATE Land SET image = ? WHERE ID = ?", [image, id]);
-        const newRecord = await this.DBQuery("SELECT * FROM Land WHERE ID = ?", [id]);
-        return newRecord;
     }
 
     async getLand(query) {
@@ -48,7 +78,7 @@ class land {
         } else if ((lat === undefined || long === undefined) && acres === undefined && owner === undefined && suitable === undefined) {
             results = await this.getLandById(id);
         } else if (id === undefined && (lat === undefined || long === undefined) && acres === undefined) {
-            results = await this.getLandByOwnerSuitability(owner, suitability);
+            results = await this.getLandByOwnerSuitability(owner, suitable);
         } else if (id === undefined && (lat === undefined || long === undefined) && suitable === undefined) {
             results = await this.getLandByAcresOwner(acres, owner);
         } else if (id === undefined && owner === undefined && suitable === undefined) {
@@ -115,7 +145,8 @@ class land {
     }
 
     async getLandByLocation(lat, long) {
-
+        results = await this.DBQuery("SELECT * FROM Land WHERE lat = ? AND long = ?", [lat, long]);
+        return results;
     }
 
     async getLandByAcres(acres) {
@@ -129,111 +160,138 @@ class land {
     }
 
     async getLandBySuitability(suitable) {
-
+        results = await this.DBQuery("SELECT * FROM Land WHERE suitability = ?", [suitable]);
+        return results;
     }
 
     async getLandByIdLocation(id, lat, long) {
-
+        results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND lat = ? AND long = ?", [id, lat, long]);
+        return results;
     }
 
     async getLandByIdAcres(id, acres) {
-
+        results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND acres = ?", [id, acres]);
+        return results;
     }
 
     async getLandByIdOwner(id, owner) {
-
+        results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND owner = ?", [id, owner]);
+        return results;
     }
 
     async getLandByIdSuitability(id, suitable) {
-
+        results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND suitability = ?", [id, suitable]);
+        return results;
     }
 
     async getLandByLocationAcres(lat, long, acres) {
-
+        results = await this.DBQuery("SELECT * FROM Land WHERE lat = ? AND long = ? AND acres = ?", [lat, long, acres]);
+        return results;
     }
 
     async getLandByLocationOwner(lat, long, owner) {
-
+        results = await this.DBQuery("SELECT * FROM Land WHERE lat = ? AND long = ? AND owner = ?", [lat, long, owner]);
+        return results;
     }
 
     async getLandByLocationSuitability(lat, long, suitable) {
-
+        results = await this.DBQuery("SELECT * FROM Land WHERE lat = ? AND long = ? AND suitability = ?", [lat, long, suitable]);
+        return results;
     }
 
     async getLandByAcresOwner(acres, owner) {
-
+        results = await this.DBQuery("SELECT * FROM Land WHERE acres = ? AND owner = ?", [acres, owner]);
+        return results;
     }
 
     async getLandByAcresSuitability(acres, suitable) {
-        
+        results = await this.DBQuery("SELECT * FROM Land WHERE acres = ? AND suitability = ?", [acres, suitable]);
+        return results;
     }
 
-    async getLandByOwnerSuitability(acres, suitable) {
-
+    async getLandByOwnerSuitability(owner, suitable) {
+        results = await this.DBQuery("SELECT * FROM Land WHERE owner = ? AND suitability = ?", [owner, suitable]);
+        return results;
     }
 
     async getLandByIdLocationAcres(id, lat, long, acres) {
-
+        results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND lat = ? AND long = ? AND acres = ?", [id, lat, long, acres]);
+        return results;
     }
 
     async getLandbyIdLocationOwner(id, lat, long, owner) {
-
+        results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND lat = ? AND long = ? AND owner = ?", [id, lat, long, owner]);
+        return results;
     }
 
     async getLandByIdLocationSuitability(id, lat, long, suitable) {
-
+        results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND lat = ? AND long = ? AND suitability = ?", [id, lat, long, suitable]);
+        return results;
     }
 
     async getLandByIdAcresOwner(id, acres, owner) {
-        
+        results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND acres = ? AND owner = ?", [id, acres, owner]);
+        return results;
     }
 
-    async getLandByIdAcresSuitability(id, acres, suitability) {
-
+    async getLandByIdAcresSuitability(id, acres, suitable) {
+        results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND acres = ? AND suitability = ?", [id, acres, suitable]);
+        return results;
     }
 
     async getLandByIdOwnerSuitability(id, owner, suitable) {
-
+        results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND owner = ? AND suitability = ?", [id, owner, suitable]);
+        return results;
     }
 
     async getLandByLocationAcresOwner(lat, long, acres, owner) {
-
+        results = await this.DBQuery("SELECT * FROM Land WHERE lat = ? AND long = ? AND acres = ? AND owner = ?", [lat, long, acres, owner]);
+        return results;
     }
 
-    async getLandByLocationAcresSuitability(lat, long, acres, suitability) {
-
+    async getLandByLocationAcresSuitability(lat, long, acres, suitable) {
+        results = await this.DBQuery("SELECT * FROM Land WHERE lat = ? AND long = ? AND acres = ? AND suitability = ?", [lat, long, acres, suitable]);
+        return results;
     }
 
-    async getLandByLocationOwnerSuitability(lat, long, acres, suitability) {
-
+    async getLandByLocationOwnerSuitability(lat, long, owner, suitable) {
+        results = await this.DBQuery("SELECT * FROM Land WHERE lat = ? AND long = ? AND owner = ? AND suitability = ?", [lat, long, owner, suitable]);
+        return results;
     }
 
-    async getLandByAcresOwnerSuitability(acres, owner, suitability) {
-
+    async getLandByAcresOwnerSuitability(acres, owner, suitable) {
+        results = await this.DBQuery("SELECT * FROM Land WHERE acres = ? AND owner = ? AND suitability = ?", [acres, owner, suitable]);
+        return results;
     }
 
     async getLandByIdLocationAcresOwner(id, lat, long, acres, owner) {
-
+        results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND lat = ? AND long = ? AND acres = ? AND owner = ?", [id, lat, long, acres, owner]);
+        return results;
     }
 
-    async getLandByIdLocationAcresSuitability(id, lat, long, acres, suitability) {
-
+    async getLandByIdLocationAcresSuitability(id, lat, long, acres, suitable) {
+        results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND lat = ? AND long = ? AND acres = ? AND suitability = ?", [id, lat, long, acres, suitable]);
+        return results;
     }
 
     async getLandByIdLocationOwnerSuitability(id, lat, long, owner, suitable) {
-
+        results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND lat = ? AND long = ? AND owner = ? AND suitability = ?", [id, lat, long, owner, suitable]);
+        return results;
     }
 
-    async getLandByIdAcresOwnerSuitability(id, acres, owner, suitability) {
-
+    async getLandByIdAcresOwnerSuitability(id, acres, owner, suitable) {
+        results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND acres = ? AND owner = ? AND suitability = ?", [id, acres, owner, suitable]);
+        return results;
     }
 
     async getLandByLocationAcresOwnerSuitability(lat, long, acres, owner, suitable) {
-
+        results = await this.DBQuery("SELECT * FROM Land WHERE lat = ? AND long = ? AND acres = ? AND owner = ? AND suitable = ?", [lat, long, acres, owner, suitable]);
+        return results;
     }
 
     async getLandByAll(id, lat, long, acres, owner, suitable) {
-
+        results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND lat = ? AND long = ? AND acres = ? AND owner = ? AND suitability = ?", [id, lat, long, acres, owner, suitable]);
+        return results;
     }
 }
 
