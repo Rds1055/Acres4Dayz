@@ -35,11 +35,6 @@ const disconnectFromDatababaseMiddleware = (req, res, next) => {
     next();
 }
 
-const disconnectFromDatababaseMiddleware = (req, res, next) => {
-    console.log('Disconnecting from the database');
-    req.disconnect();
-    next();
-}
 
 module.exports = {
     createModelsMiddleware,
