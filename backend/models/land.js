@@ -18,6 +18,10 @@ class land {
         const suitable = body.suitable;
         const bid = body.bid;
         const image = body.image;
+
+        const result = await this.DBQuery("INSERT INTO Land(acres, is_available, owner, description, coords_lat, coords_long, suitability, starting_bid, image) VALUES (?,?,?,?,?,?,?,?,?)", [acres, available, owner, description, lat, long, suitable, bid, image]);
+        const newRecord = await this.DBQuery("SELECT * FROM Land WHERE ID = ?", [result.insertId]);
+        return newRecord;
     }
 
     async deleteLand(id) {

@@ -7,14 +7,21 @@ class review {
     close () {
         this.disconnect();
     }
+    
+    async createNewReview(body) {
+        const land = body.land;
+        const reviewer = body.reviewer;
+        const rating = body.rating;
+        const contents = body.contents;
 
-    async fetchAllSpaces() {
-        const results = await this.DBQuery("SELECT * FROM Review");
-        return results;
+        const result = await this.DBQuery("INSERT INTO Review(land_id, reviewer, rating, contents) VALUES (?,?,?,?)", [land, reviewer, rating, contents]);
+        const newRecord = await this.DBQuery("SELECT * FROM Review WHERE ID = ?", [result.insertId]);
+        return newRecord;
     }
 
-    async createNewReview(body) {
-        
+    async getAllReviews() {
+        const results = await this.DBQuery("SELECT * FROM Review");
+        return results;
     }
 
     async getReviewsByLand(land) {
@@ -23,7 +30,8 @@ class review {
     }
 
     async getReviewsByReviewer(reviewer) {
-        const results = await this.DBQuery("SELECT * FROM Review WHERE reviewer = ?", [reviewer])
+        const results = await this.DBQuery("SELECT * FROM Review WHERE reviewer = ?", [reviewer]);
+        return results;
     }
 }
 
