@@ -5,7 +5,7 @@ DROP DATABASE acres_tables;
 
 CREATE TABLE User (
     username VARCHAR(30) PRIMARY KEY,
-    password VARCHAR(30),
+    password VARCHAR(60),
     email VARCHAR(30),
     phone VARCHAR(30),
     image VARCHAR(50)
@@ -13,7 +13,7 @@ CREATE TABLE User (
 
 CREATE TABLE Land (
     ID SERIAL PRIMARY KEY,
-    Acres INT,
+    acres INT,
     is_available BOOLEAN,
     owner VARCHAR(30) REFERENCES User(username),
     description VARCHAR(30),
@@ -49,3 +49,5 @@ CREATE TABLE Review (
     rating INT,
     contents VARCHAR(200)
 );
+
+SELECT * FROM User;

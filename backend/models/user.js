@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const USER_TABLE = "User";
 
 const createNewUser = async (body) => {
-    const email = body.email;
+    const username = body.username;
     const password = body.password;
     const hashedPassword = bcrypt.hashSync(password, 10);
     const query = knex(USER_TABLE).insert({username, password: hashedPassword});

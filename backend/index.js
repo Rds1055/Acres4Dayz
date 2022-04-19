@@ -6,15 +6,17 @@ const userRoutes = require('./routes/user');
 const sessionRoutes = require('./routes/session');
 
 // Import any middleware here
+const middleware = require("./middleware/model-middleware");
 const { authenticateJWT} = require('./middleware/auth');
 
 // Start by defining the express app instance
 const app = express();
-const port = 3000;
+const port = 52570;
 
 // On every request, this gets called first. This is the first step in our "middleware chain".
 // We put this before anything else because we know our route handlers are going to need connections
 // to the database
+app.use(middleware.createModelsMiddleware);
 app.use(bodyParser.json());
 
 // Add a health route. Note the new argument: next
@@ -29,7 +31,7 @@ app.use('/session', sessionRoutes);
 
 
 // For any route that starts with `/users`, use the route handler here
-app.use('/user', authenticateJWT, userRoutes);
+app.use('/user', userRoutes);
 // app.use('/students', authenticateWithClaims(['student']), usersRoutes);
 
 // Now that we've configured the app, make it listen for incoming requests

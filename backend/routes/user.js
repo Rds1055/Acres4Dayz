@@ -3,19 +3,21 @@ var router = express.Router();
 
 /* GET users listing. */
 // create new user
-router.post('/', function(req, res, next) {
+router.post('/', async(req, res, next) => {
   try {
       const body = req.body;
       console.log(body);
       //const result = await req.controllers.users.createNewUser(body.username, body.password);
+      const result = await req.models.user.createNewUser(body);
       res.status(201).json(result);
   } catch (err) {
       console.error('Failed to log in:', err);
       res.status(500).json({ message: err.toString() });
   }
+  next();
 });
 // find user by username
-router.get('/', function(req, res, next) {
+router.get('/', async(req, res, next) => {
   try {
       const body = req.body;
       console.log(body);
@@ -25,9 +27,10 @@ router.get('/', function(req, res, next) {
       console.error('Failed to log in:', err);
       res.status(500).json({ message: err.toString() });
   }
+  next();
 });
 // update user info
-router.put('/', function(req, res, next) {
+router.put('/', async (req, res, next) => {
   try {
       const body = req.body;
       console.log(body);
@@ -37,6 +40,7 @@ router.put('/', function(req, res, next) {
       console.error('Failed to log in:', err);
       res.status(500).json({ message: err.toString() });
   }
+  next();
 });
 
 module.exports = router;

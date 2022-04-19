@@ -1,6 +1,6 @@
 
 const connectToDatabase = require('../models/database-helpers.js');
-const User = require('../models/users');
+const User = require('../models/user');
 const Bid = require('../models/bid');
 const Contract = require('../models/contract');
 const Land = require('../models/land');
@@ -22,7 +22,7 @@ const createModelsMiddleware = async (req, res, next) => {
         contract: new Contract(DBQuery, disconnect),
         land: new Land(DBQuery, disconnect),
         review: new Review(DBQuery, disconnect),
-        user: new User(DBQuery, disconnect)
+        user: User
 
     }
     req.disconnect = disconnect;
