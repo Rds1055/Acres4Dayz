@@ -6,7 +6,7 @@ var router = express.Router();
 router.post('/', async(req, res, next) => {
   try {
       const body = req.body;
-      console.log(body);
+      // console.log(body);
       //const result = await req.controllers.users.createNewUser(body.username, body.password);
       const result = await req.models.user.createNewUser(body);
       res.status(201).json(result);
@@ -20,7 +20,7 @@ router.post('/', async(req, res, next) => {
 router.get('/:username', async(req, res, next) => {
   try {
       const user = req.params.username;
-      console.log(user);
+      // console.log(user);
       const result = await req.models.user.findUserByUsername(user);
       //const result = await req.controllers.users.getUsername(body.username);
       res.status(200).json(result);
@@ -30,12 +30,24 @@ router.get('/:username', async(req, res, next) => {
   }
   next();
 });
+// find all users
+router.get('/', async(req, res, next) => {
+  try {
+      const result = await req.models.user.getAllUsers();
+      //const result = await req.controllers.users.getUsername(body.username);
+      res.status(200).json(result);
+  } catch (err) {
+      console.error('Failed to find users:', err);
+      res.status(500).json({ message: err.toString() });
+  }
+  next();
+});
 // update user info
 router.put('/:username', async (req, res, next) => {
   try {
       const user = req.params.username;
       const body = req.body;
-      console.log(body);
+      // console.log(body);
       const result = await req.models.user.updateUserData(user, body);
       //const result = await req.controllers.users.updateUserData(body.email, body.phone, body.image);
       res.status(201).json(result);

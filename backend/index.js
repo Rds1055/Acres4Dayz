@@ -17,6 +17,7 @@ const port = 52570;
 // We put this before anything else because we know our route handlers are going to need connections
 // to the database
 app.use(middleware.createModelsMiddleware);
+app.use(middleware.requestLogMiddleware);
 app.use(bodyParser.json());
 
 // Add a health route. Note the new argument: next

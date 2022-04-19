@@ -21,6 +21,11 @@ class User {
         this.updateUserData(username, body);
         return this.findUserByUsername(username);
     };
+
+    async getAllUsers() {
+        const result = await this.DBQuery("SELECT * FROM User");
+        return result;
+    }
     
     async findUserByUsername(username) {
         const result = await this.DBQuery("SELECT * FROM User WHERE username = ?", [username]);
