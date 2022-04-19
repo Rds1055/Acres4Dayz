@@ -17,13 +17,11 @@ const createModelsMiddleware = async (req, res, next) => {
     console.log('Creating models in middleware');
     const { DBQuery, disconnect } = await connectToDatabase();
     req.models = {
-
         bid: new Bid(DBQuery, disconnect),
         contract: new Contract(DBQuery, disconnect),
         land: new Land(DBQuery, disconnect),
         review: new Review(DBQuery, disconnect),
-        user: User
-
+        user: new User(DBQuery, disconnect)
     }
     req.disconnect = disconnect;
     next();
