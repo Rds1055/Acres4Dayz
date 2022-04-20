@@ -1,5 +1,4 @@
 var express = require('express');
-const { route } = require('./user');
 var router = express.Router();
 
 /* GET users listing. */
@@ -68,7 +67,7 @@ router.get("/owner/:username", async (req, res, next) => {
 
 router.get("/bidder/:username", async (req, res, next) => {
   try {
-    const id = req.params.username;
+    const username = req.params.username;
     const results = await req.models.bid.getBidsByBidder(username);
     res.status(200).json(results);
   } catch (err) {

@@ -8,7 +8,7 @@ class review {
         this.disconnect();
     }
     
-    async createNewReview(body) {
+    async createReview(body) {
         const land = body.land;
         const reviewer = body.reviewer;
         const rating = body.rating;
