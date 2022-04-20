@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const accessTokenSecret = 'mysupercoolsecret';
+const accessTokenSecret = 'rateababy';
 
 const authenticateJWT = (req, res, next) => {
   const authHeader = req.headers.authorization;

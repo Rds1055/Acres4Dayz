@@ -13,7 +13,7 @@ class contract {
         return results;
     }
 
-    async createNewContract(body) {
+    async createContract(body) {
         const land = body.land;
         const owner = body.owner;
         const renter = body.renter;
