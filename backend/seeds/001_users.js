@@ -1,5 +1,4 @@
-const random = require('./random-generator');
-const User = require('../models/user');
+const random = require('../util/random-generator');
 /**
  * Populates the user table. Using the chance n function (https://chancejs.com/miscellaneous/n.html)
  * we can very easily generate 10, 100, 100000 users by changing one value.
@@ -10,8 +9,8 @@ const User = require('../models/user');
  */
 
 
-// require createNewUser update
-const users = random.n(random.user, 10);
-for (var element of users){
-    User.createNewUser(element)
-}
+
+exports.seed = async function(knex) {
+    const users = random.n(random.user, 10);
+    await knex('users').insert(users);
+};

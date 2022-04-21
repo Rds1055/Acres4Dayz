@@ -57,19 +57,31 @@ const mixins = {
         }
     },
     
-    land: (options = {}) => ({
-        id: random.integer({ min: 10000000, max: 999999999 }).toString(),
-        name: random.first(),
-        email: random.email(),
-        ...options
-    }),
+    land: (options = {}) => {
+        return {
+            id: random.integer({ min: 10000000, max: 999999999 }),
+            acres: random.integer({ min: 1000, max: 9999 }),
+            available: true,
+            owner: random.first().concat(random.last()),
+            description: "this is description",
+            lat: random.floating(),
+            long: random.floating(),
+            suitable_for: "anyone",
+            starting_bid: random.integer({ min: 100000, max: 999999 }),
+            image: "image link placeholder",
+            ...options,
+        }
+    },
 
-    bid: (options = {}) => ({
-        id: random.integer({ min: 10000000, max: 999999999 }).toString(),
-        name: random.first(),
-        email: random.email(),
-        ...options
-    }),
+    bid: (options = {}) => {
+        return{
+            id: random.integer({ min: 10000000, max: 999999999 }),
+            land_id: random.integer({ min: 10000000, max: 999999999 }),
+            // will need to update owner
+            owner: random.first().concat(random.last()),
+            ...options
+        } 
+    },
 
     contract: (options = {}) => ({
         id: random.integer({ min: 10000000, max: 999999999 }).toString(),
