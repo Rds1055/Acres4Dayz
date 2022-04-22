@@ -12,5 +12,5 @@ const random = require('../util/random-generator');
 
 exports.seed = async function(knex) {
     const users = random.n(random.user, 10);
-    await knex('users').insert(users);
+    await knex('User').insert(users);
 };

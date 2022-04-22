@@ -59,7 +59,7 @@ const mixins = {
     
     land: (options = {}) => {
         return {
-            id: random.integer({ min: 10000000, max: 999999999 }),
+            ID: random.integer({ min: 10000000, max: 999999999 }),
             acres: random.integer({ min: 1000, max: 9999 }),
             available: true,
             owner: random.first().concat(random.last()),
@@ -75,27 +75,38 @@ const mixins = {
 
     bid: (options = {}) => {
         return{
-            id: random.integer({ min: 10000000, max: 999999999 }),
+            ID: random.integer({ min: 10000000, max: 999999999 }),
             land_id: random.integer({ min: 10000000, max: 999999999 }),
             // will need to update owner
             owner: random.first().concat(random.last()),
+            top_bid: random.integer({ min: 1, max: 999999999}),
+            top_bidder: random.first().concat(random.last()),
             ...options
         } 
     },
 
-    contract: (options = {}) => ({
-        id: random.integer({ min: 10000000, max: 999999999 }).toString(),
-        name: random.first(),
-        email: random.email(),
-        ...options
-    }),
+    contract: (options = {}) => {
+        return{
+            ID: random.integer({ min: 10000000, max: 999999999 }),
+            land_id: random.integer({ min: 10000000, max: 999999999 }),
+            owner: random.first().concat(random.last()),
+            renter: random.first().concat(random.last()),
+            start: random.date(),
+            end: random.date(),
+            ...options
+        } 
+    },
 
-    review: (options = {}) => ({
-        id: random.integer({ min: 10000000, max: 999999999 }).toString(),
-        name: random.first(),
-        email: random.email(),
-        ...options
-    }),
+    review: (options = {}) => {
+        return {
+            ID: random.integer({ min: 10000000, max: 999999999 }).toString(),
+            land_id: random.integer({ min: 10000000, max: 999999999 }),
+            reviewer: random.first().concat(random.last()),
+            rating: random.integer({ min: 0, max: 10}),
+            contents: random.paragraph(),
+            ...options
+        }
+    },
 
     
 };

@@ -7,8 +7,7 @@ CREATE TABLE User (
     username VARCHAR(30) PRIMARY KEY,
     password VARCHAR(60),
     email VARCHAR(30),
-    phone VARCHAR(30),
-    image VARCHAR(50)
+    phone VARCHAR(30)
 );
 
 CREATE TABLE Land (
@@ -45,6 +44,7 @@ CREATE TABLE Bid (
 CREATE TABLE Review (
     ID SERIAL PRIMARY KEY,
     land_id INT REFERENCES Land(ID),
+    owner VARCHAR(30) REFERENCES User(username),
     reviewer VARCHAR(30) REFERENCES User(username),
     rating INT,
     contents VARCHAR(200)
