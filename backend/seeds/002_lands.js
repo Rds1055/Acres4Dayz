@@ -1,5 +1,4 @@
-const random = require('../utils/random-generator');
-
+const random = require('../util/random-generator');
 
 exports.seed = async function(knex) {
     // Use knex to load 5 users

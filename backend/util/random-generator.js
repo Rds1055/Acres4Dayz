@@ -61,11 +61,11 @@ const mixins = {
         return {
             ID: random.integer({ min: 10000000, max: 999999999 }),
             acres: random.integer({ min: 1000, max: 9999 }),
-            available: true,
+            is_available: true,
             owner: random.first().concat(random.last()),
             description: "this is description",
-            lat: random.floating(),
-            long: random.floating(),
+            coord_lat: random.floating(),
+            coord_long: random.floating(),
             suitable_for: "anyone",
             starting_bid: random.integer({ min: 100000, max: 999999 }),
             image: "image link placeholder",
@@ -103,7 +103,7 @@ const mixins = {
             land_id: random.integer({ min: 10000000, max: 999999999 }),
             reviewer: random.first().concat(random.last()),
             rating: random.integer({ min: 0, max: 10}),
-            contents: random.paragraph(),
+            contents: random.paragraph().slice(0, 200),
             ...options
         }
     },

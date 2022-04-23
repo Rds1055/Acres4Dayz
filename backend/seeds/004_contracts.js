@@ -1,19 +1,18 @@
-const random = require('../utils/random-generator');
-
+const random = require('../util/random-generator');
 
 exports.seed = async function(knex) {
     const num = 5;
-    const users = await knex('users');
-    const lands = await knex('lands');
+    const users = await knex('User');
+    const lands = await knex('Land');
     const contracts = [];
     for (let i = 0; i < num; i++) {
-        let index = Math.floor(Math.random() * lands.length());
-        const land = lands[index].id;
+        let index = Math.floor(Math.random() * Object.keys(lands).length);
+        const land = lands[index].ID;
         const owner = lands[index].owner;
-        index = Math.floor(Math.random() * users.length());
+        index = Math.floor(Math.random() * Object.keys(users).length);
         let renter = users[index].username;
         while (renter === owner) {
-            index = Math.floor(Math.random() * users.length());
+            index = Math.floor(Math.random() * Object.keys(users).length);
             renter = users[index].username;
         }
         const contract = random.contract({ land_id: land, owner: owner, renter: renter });
