@@ -8,7 +8,6 @@ const auth = require("../middleware/auth");
 router.post('/', async (req, res, next) => {
   try {
       const body = req.body;
-      console.log(body);
       const result = await controller.authenticateUser(body.username, body.password);
       if (result === null) {
         res.status(401).json({message: "Invalid credentials"});

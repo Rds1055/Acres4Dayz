@@ -14,13 +14,20 @@ class contract {
     }
 
     async createContract(body) {
-        const land = body.land;
+        const id = body.ID;
+        const land = body.land_id;
         const owner = body.owner;
         const renter = body.renter;
         const start = body.start;
         const end = body.end;
 
-        const result = await this.DBQuery("INSERT INTO Contract(land_id, owner, renter, start, end) VALUES (?,?,?,?,?)", [land, owner, renter, start, end]);
+        let result;
+        if (id === undefined) {
+            result = await this.DBQuery("INSERT INTO Contract(land_id, owner, renter, start, end) VALUES (?,?,?,?,?)", [land, owner, renter, start, end]);
+        } else {
+            result = await this.DBQuery("INSERT INTO Contract(ID, land_id, owner, renter, start, end) VALUES (?, ?,?,?,?,?)", [id, land, owner, renter, start, end]);
+        }
+        
         const newRecord = await this.DBQuery("SELECT * FROM Contract WHERE ID = ?", [result.insertId]);
         return newRecord;
     }

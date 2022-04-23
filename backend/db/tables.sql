@@ -49,5 +49,3 @@ CREATE TABLE Review (
     rating INT,
     contents VARCHAR(200)
 );
-
-SELECT * FROM User;

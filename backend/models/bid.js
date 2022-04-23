@@ -34,6 +34,11 @@ class bid {
         return newRecord;
     }
 
+    async getBidsById(id) {
+        const results = await this.DBQuery("SELECT * FROM Bid WHERE ID = ?", [id]);
+        return results;
+    }
+
     async getBidsByOwner(owner) {
         const results = await this.DBQuery("SELECT * FROM Bid WHERE owner = ?", [owner]);
         return results;

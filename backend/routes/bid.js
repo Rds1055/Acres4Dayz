@@ -41,6 +41,18 @@ router.get("/", async (req, res, next) => {
   next();
 });
 
+router.get("/:id", async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const results = await req.models.bid.getBidsById(id);
+    res.status(200).json(results);
+  } catch (err) {
+    console.error("Failed to get bids:", err);
+    res.status(500).json({message: err.message});
+  }
+  next();
+});
+
 router.get("/land/:id", async (req, res, next) => {
   try {
     const id = req.params.id;

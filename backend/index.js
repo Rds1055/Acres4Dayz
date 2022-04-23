@@ -5,9 +5,13 @@ const bodyParser = require('body-parser');
 const userRoutes = require('./routes/user');
 const sessionRoutes = require('./routes/session');
 const bidRoutes = require("./routes/bid");
+const contractRoutes = require("./routes/contract");
+const landRoutes = require("./routes/land");
+const reviewRoutes = require("./routes/review");
 
 // Import any middleware here
 const middleware = require("./middleware/model-middleware");
+const land = require('./models/land');
 
 // Start by defining the express app instance
 const app = express();
@@ -34,6 +38,9 @@ app.use('/session', sessionRoutes);
 // For any route that starts with `/users`, use the route handler here
 app.use('/user', userRoutes);
 app.use("/bid", bidRoutes);
+app.use("/contract", contractRoutes);
+app.use("/land", landRoutes);
+app.use("/review", reviewRoutes);
 // app.use('/students', authenticateWithClaims(['student']), usersRoutes);
 
 // Now that we've configured the app, make it listen for incoming requests

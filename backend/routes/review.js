@@ -63,7 +63,7 @@ router.get("/", async (req, res, next) => {
   router.get("/reviewer/:username", async (req, res, next) => {
     try {
       const username = req.params.username;
-      const results = await req.models.review.getContractsByReviewer(username);
+      const results = await req.models.review.getReviewsByReviewer(username);
       res.status(200).json(results);
     } catch (err) {
       console.error("Failed to get reviews:", err);
