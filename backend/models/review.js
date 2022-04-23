@@ -10,11 +10,12 @@ class review {
     
     async createReview(body) {
         const land = body.land;
+        const owner = body.owner;
         const reviewer = body.reviewer;
         const rating = body.rating;
         const contents = body.contents;
 
-        const result = await this.DBQuery("INSERT INTO Review(land_id, reviewer, rating, contents) VALUES (?,?,?,?)", [land, reviewer, rating, contents]);
+        const result = await this.DBQuery("INSERT INTO Review(land_id, owner, reviewer, rating, contents) VALUES (?,?,?,?)", [land, owner, reviewer, rating, contents]);
         const newRecord = await this.DBQuery("SELECT * FROM Review WHERE ID = ?", [result.insertId]);
         return newRecord;
     }
@@ -26,6 +27,11 @@ class review {
 
     async getReviewsByLand(land) {
         const results = await this.DBQuery("SELECT * FROM Review WHERE land_id = ?", [land]);
+        return results;
+    }
+
+    async getReviewsByOwner(owner) {
+        const results = await this.DBQuery("SELECT * FROM Review WHERE owner = ?", [owner]);
         return results;
     }
 

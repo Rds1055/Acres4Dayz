@@ -36,10 +36,22 @@ router.get("/", async (req, res, next) => {
     next();
   });
 
+  router.get("/owner/:username", async (req, res, next) => {
+    try {
+      const username = req.params.username;
+      const results = await req.models.review.getReviewsByOwner(username);
+      res.status(200).json(results);
+    } catch (err) {
+      console.error("Failed to get reviews:", err);
+      res.status(500).json({message: err.message});
+    }
+    next();
+  });
+
   router.get("/land/:id", async (req, res, next) => {
     try {
       const id = req.params.id;
-      const results = await req.models.contract.getReviewsByLand(id);
+      const results = await req.models.review.getReviewsByLand(id);
       res.status(200).json(results);
     } catch (err) {
       console.error("Failed to get reviews:", err);
@@ -51,7 +63,7 @@ router.get("/", async (req, res, next) => {
   router.get("/reviewer/:username", async (req, res, next) => {
     try {
       const username = req.params.username;
-      const results = await req.models.contract.getContractsByReviewer(username);
+      const results = await req.models.review.getContractsByReviewer(username);
       res.status(200).json(results);
     } catch (err) {
       console.error("Failed to get reviews:", err);

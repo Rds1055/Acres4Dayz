@@ -47,7 +47,6 @@ class User {
         const password = body.password;
         const email = body.email;
         const phone = body.phone;
-        const image = body.image;
         if (password !== undefined) {
             this.updateUserPassword(username, password);
         }
@@ -56,9 +55,6 @@ class User {
         }
         if (phone !== undefined) {
             this.updateUserPhone(username, phone);
-        }
-        if (image !== undefined) {
-            this.updateUserImage(username, image);
         }
         const newRecord = await this.DBQuery("SELECT * FROM User WHERE username = ?", [username]);
         return newRecord;
@@ -75,10 +71,6 @@ class User {
     
     async updateUserPhone(username, phone) {
         const results = await this.DBQuery("UPDATE User SET phone = ? WHERE username = ?", [phone, username]);
-    };
-    
-    async updateUserImage(username, image) {
-        const results = await this.DBQuery("UPDATE User SET image = ? WHERE username = ?", [image, username]);
     };
 
     async deleteUser(username) {
