@@ -1,8 +1,6 @@
 CREATE DATABASE acres_tables;
 DROP DATABASE acres_tables;
 
-
-
 CREATE TABLE User (
     username VARCHAR(30) PRIMARY KEY,
     password VARCHAR(60),
@@ -13,7 +11,6 @@ CREATE TABLE User (
 CREATE TABLE Land (
     ID SERIAL PRIMARY KEY,
     acres INT,
-    is_available BOOLEAN,
     owner VARCHAR(30) REFERENCES User(username),
     description VARCHAR(30),
     coord_lat FLOAT,

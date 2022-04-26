@@ -61,7 +61,6 @@ const mixins = {
         return {
             ID: random.integer({ min: 10000000, max: 999999999 }),
             acres: random.integer({ min: 1000, max: 9999 }),
-            is_available: true,
             owner: random.first().concat(random.last()),
             description: "this is description",
             coord_lat: random.floating(),

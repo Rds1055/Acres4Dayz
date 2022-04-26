@@ -11,7 +11,6 @@ class land {
     async createNewLand(body) {
         const id = body.ID;
         const acres = body.acres;
-        const available = body.is_available;
         const owner = body.owner;
         const description = body.description;
         const lat = body.coord_lat;
@@ -22,9 +21,9 @@ class land {
 
         let result;
         if (id === undefined) {
-            result = await this.DBQuery("INSERT INTO Land(acres, is_available, owner, description, coord_lat, coord_long, suitable_for, starting_bid, image) VALUES (?,?,?,?,?,?,?,?,?)", [acres, available, owner, description, lat, long, suitable, bid, image]);
+            result = await this.DBQuery("INSERT INTO Land(acres, owner, description, coord_lat, coord_long, suitable_for, starting_bid, image) VALUES (?,?,?,?,?,?,?,?)", [acres, owner, description, lat, long, suitable, bid, image]);
         } else {
-            result = await this.DBQuery("INSERT INTO Land(ID, acres, is_available, owner, description, coord_lat, coord_long, suitable_for, starting_bid, image) VALUES (?, ?,?,?,?,?,?,?,?,?)", [id, acres, available, owner, description, lat, long, suitable, bid, image]);
+            result = await this.DBQuery("INSERT INTO Land(ID, acres, owner, description, coord_lat, coord_long, suitable_for, starting_bid, image) VALUES (?,?,?,?,?,?,?,?,?)", [id, acres, owner, description, lat, long, suitable, bid, image]);
         }
         
         const newRecord = await this.DBQuery("SELECT * FROM Land WHERE ID = ?", [result.insertId]);
@@ -38,14 +37,10 @@ class land {
 
     async updateLand(id, body) {
         const description = body.description;
-        const available = body.is_available;
         const image = body.image;
 
         if (description !== undefined) {
             this.updateDescription(id, description);
-        }
-        if (available !== undefined) {
-            this.updateIsAvailable(id, available);
         }
         if (image !== undefined) {
             this.updateImage(id, image);
@@ -57,10 +52,6 @@ class land {
 
     async updateDescription(id, description) {
         const results = await this.DBQuery("UPDATE Land SET description = ? WHERE ID = ?", [description, id]);
-    }
-
-    async updateIsAvailable(id, available) {
-        const results = await this.DBQuery("UPDATE Land SET is_available = ? WHERE ID = ?", [available, id]);
     }
 
     async updateImage(id, image) {
