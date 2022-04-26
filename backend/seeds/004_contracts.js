@@ -1,7 +1,7 @@
 const random = require('../util/random-generator');
 
 exports.seed = async function(knex) {
-    const num = 5;
+    const num = 50;
     const users = await knex('User');
     const lands = await knex('Land');
     const contracts = [];

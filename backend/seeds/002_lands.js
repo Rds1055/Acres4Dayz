@@ -2,7 +2,7 @@ const random = require('../util/random-generator');
 
 exports.seed = async function(knex) {
     const users = await knex('User');
-    const num = 5;
+    const num = 100;
     const lands = [];
     for (let i = 0; i < num; i++) {
         const index = Math.floor(Math.random() * Object.keys(users).length);
