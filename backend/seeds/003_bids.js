@@ -5,8 +5,6 @@ exports.seed = async function(knex) {
     const users = await knex('User');
     const lands = await knex('Land');
     const bids = [];
-    console.log(typeof lands);
-    console.log(lands);
     for (let i = 0; i < num; i++) {
         let index = Math.floor(Math.random() * Object.keys(lands).length);
         const land = lands[index].ID;

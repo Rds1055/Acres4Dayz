@@ -13,17 +13,16 @@ class land {
         const acres = body.acres;
         const owner = body.owner;
         const description = body.description;
-        const lat = body.coord_lat;
-        const long = body.coord_long;
+        const zip = body.zip_code;
         const suitable = body.suitable_for;
         const bid = body.starting_bid;
         const image = body.image;
 
         let result;
         if (id === undefined) {
-            result = await this.DBQuery("INSERT INTO Land(acres, owner, description, coord_lat, coord_long, suitable_for, starting_bid, image) VALUES (?,?,?,?,?,?,?,?)", [acres, owner, description, lat, long, suitable, bid, image]);
+            result = await this.DBQuery("INSERT INTO Land(acres, owner, description, zip_code, suitable_for, starting_bid, image) VALUES (?,?,?,?,?,?,?,?)", [acres, owner, description, zip, suitable, bid, image]);
         } else {
-            result = await this.DBQuery("INSERT INTO Land(ID, acres, owner, description, coord_lat, coord_long, suitable_for, starting_bid, image) VALUES (?,?,?,?,?,?,?,?,?)", [id, acres, owner, description, lat, long, suitable, bid, image]);
+            result = await this.DBQuery("INSERT INTO Land(ID, acres, owner, description, zip_code, suitable_for, starting_bid, image) VALUES (?,?,?,?,?,?,?,?,?)", [id, acres, owner, description, zip, suitable, bid, image]);
         }
         
         const newRecord = await this.DBQuery("SELECT * FROM Land WHERE ID = ?", [result.insertId]);
@@ -38,12 +37,16 @@ class land {
     async updateLand(id, body) {
         const description = body.description;
         const image = body.image;
+        const bid = body.starting_bid;
 
         if (description !== undefined) {
             this.updateDescription(id, description);
         }
         if (image !== undefined) {
             this.updateImage(id, image);
+        }
+        if (bid !== undefined) {
+            this.updateBid(id, bid);
         }
 
         const newRecord = await this.DBQuery("SELECT * FROM Land WHERE ID = ?", [id]);
@@ -58,79 +61,82 @@ class land {
         const results = await this.DBQuery("UPDATE Land SET image = ? WHERE ID = ?", [image, id]);
     }
 
+    async updateBid(id, bid) {
+        const results = await this.DBQuery("UPDATE Land SET starting_bid = ? WHERE ID = ?", [bid, id]);
+    }
+
     async getLand(query) {
         const id = query.id;
-        const lat = query.lat;
-        const long = query.long;
+        const zip = query.zip_code;
         const acres = query.acres;
         const owner = query.owner;
         const suitable = query.suitable;
 
         let results;
-        if (id === undefined && (lat === undefined || long === undefined) && acres === undefined && owner === undefined && suitable === undefined) {
+        if (id === undefined && zip === undefined && acres === undefined && owner === undefined && suitable === undefined) {
             results = await this.getAllLand();
-        } else if (id === undefined && (lat === undefined || long === undefined) && acres === undefined && owner === undefined) {
+        } else if (id === undefined && zip === undefined && acres === undefined && owner === undefined) {
             results = await this.getLandBySuitability(suitable);
-        } else if (id === undefined && (lat === undefined || long === undefined) && acres === undefined && suitable === undefined) {
+        } else if (id === undefined && zip === undefined && acres === undefined && suitable === undefined) {
             results = await this.getLandByOwner(owner);
-        } else if (id === undefined && (lat === undefined || long === undefined) && owner === undefined && suitable === undefined) {
+        } else if (id === undefined && zip === undefined && owner === undefined && suitable === undefined) {
             results = await this.getLandByAcres(acres);
         } else if (id === undefined && acres === undefined && owner === undefined && suitable === undefined) {
-            results = await this.getLandByLocation(lat, long);
-        } else if ((lat === undefined || long === undefined) && acres === undefined && owner === undefined && suitable === undefined) {
+            results = await this.getLandByLocation(zip);
+        } else if (zip === undefined && acres === undefined && owner === undefined && suitable === undefined) {
             results = await this.getLandById(id);
-        } else if (id === undefined && (lat === undefined || long === undefined) && acres === undefined) {
+        } else if (id === undefined && zip === undefined && acres === undefined) {
             results = await this.getLandByOwnerSuitability(owner, suitable);
-        } else if (id === undefined && (lat === undefined || long === undefined) && suitable === undefined) {
+        } else if (id === undefined && zip === undefined && suitable === undefined) {
             results = await this.getLandByAcresOwner(acres, owner);
         } else if (id === undefined && owner === undefined && suitable === undefined) {
-            results = await this.getLandByLocationAcres(lat, long, acres);
+            results = await this.getLandByLocationAcres(zip, acres);
         } else if (acres === undefined && owner === undefined && suitable === undefined) {
-            results = await this.getLandByIdLocation(id, lat, long);
-        } else if (id === undefined && (lat === undefined || long === undefined) && owner === undefined) {
+            results = await this.getLandByIdLocation(id, zip);
+        } else if (id === undefined && zip === undefined && owner === undefined) {
             results = await this.getLandByAcresSuitability(acres, suitable);
         } else if (id === undefined && acres === undefined && owner === undefined) {
-            results = await this.getLandByLocationSuitability(lat, long, suitable);
-        } else if ((lat === undefined || long === undefined) && acres === undefined && owner === undefined) {
+            results = await this.getLandByLocationSuitability(zip, suitable);
+        } else if (zip === undefined && acres === undefined && owner === undefined) {
             results = await this.getLandByIdSuitability(id, suitable);
         } else if (id === undefined && acres === undefined && suitable === undefined) {
-            results = await this.getLandByLocationOwner(lat, long, owner);
-        } else if ((lat === undefined || long === undefined) && acres === undefined && suitable === undefined) {
+            results = await this.getLandByLocationOwner(zip, owner);
+        } else if (zip === undefined && acres === undefined && suitable === undefined) {
             results = await this.getLandByIdOwner(id, owner);
-        } else if ((lat === undefined || long === undefined) && owner === undefined && suitable === undefined) {
+        } else if (zip === undefined && owner === undefined && suitable === undefined) {
             results = await this.getLandByIdAcres(id, acres);
         } else if (owner === undefined && suitable === undefined) {
-            results = await this.getLandByIdLocationAcres(id, lat, long, acres);
+            results = await this.getLandByIdLocationAcres(id, zip, acres);
         } else if (acres === undefined && suitable === undefined) {
-            results = await this.getLandbyIdLocationOwner(id, lat, long, owner);
-        } else if ((lat === undefined || long === undefined) && suitable === undefined) {
+            results = await this.getLandbyIdLocationOwner(id, zip, owner);
+        } else if (zip === undefined && suitable === undefined) {
             results = await this.getLandByIdAcresOwner(id, acres, owner);
         } else if (id === undefined && suitable === undefined) {
-            results = await this.getLandByLocationAcresOwner(lat, long, acres, owner);
+            results = await this.getLandByLocationAcresOwner(zip, acres, owner);
         } else if (acres === undefined && owner === undefined) {
-            results = await this.getLandByIdLocationSuitability(id, lat, long, suitable);
-        } else if ((lat === undefined || long === undefined) && owner === undefined) {
+            results = await this.getLandByIdLocationSuitability(id, zip, suitable);
+        } else if (zip === undefined && owner === undefined) {
             results = await this.getLandByIdAcresSuitability(id, acres, suitable);
         } else if (id === undefined && owner === undefined) {
-            results = await this.getLandByLocationAcresSuitability(lat, long, acres, suitable);
-        } else if ((lat === undefined || long === undefined) && acres === undefined) {
+            results = await this.getLandByLocationAcresSuitability(zip, acres, suitable);
+        } else if (zip === undefined && acres === undefined) {
             results = await this.getLandByIdOwnerSuitability(id, owner, suitable);
         } else if (id === undefined && acres === undefined) {
-            results = await this.getLandByLocationOwnerSuitability(lat, long, acres, suitable);
-        } else if (id === undefined && (lat === undefined || long === undefined)) {
+            results = await this.getLandByLocationOwnerSuitability(zip, acres, suitable);
+        } else if (id === undefined && zip === undefined) {
             results = await this.getLandByAcresOwnerSuitability(acres, owner, suitable); 
         } else if (id === undefined) {
-            results = await this.getLandByLocationAcresOwnerSuitability(lat, long, acres, owner, suitable);
-        } else if (lat === undefined || long === undefined) {
+            results = await this.getLandByLocationAcresOwnerSuitability(zip, acres, owner, suitable);
+        } else if (zip === undefined) {
             results = await this.getLandByIdAcresOwnerSuitability(id, acres, owner, suitable);
         } else if (acres === undefined) {
-            results = await this.getLandByIdLocationOwnerSuitability(id, lat, long, owner, suitable);
+            results = await this.getLandByIdLocationOwnerSuitability(id, zip, owner, suitable);
         } else if (owner === undefined) {
-            results = await this.getLandByIdLocationAcresSuitability(id, lat, long, acres, suitable);
+            results = await this.getLandByIdLocationAcresSuitability(id, zip, acres, suitable);
         } else if (suitable === undefined) {
-            results = await this.getLandByIdLocationAcresOwner(id, lat, long, acres, suitable);
+            results = await this.getLandByIdLocationAcresOwner(id, zip, acres, suitable);
         } else {
-            results = await this.getLandByAll(id, lat, long, acres, owner, suitable);
+            results = await this.getLandByAll(id, zip, acres, owner, suitable);
         }
 
         return results;
@@ -146,8 +152,8 @@ class land {
         return results;
     }
 
-    async getLandByLocation(lat, long) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE lat = ? AND long = ?", [lat, long]);
+    async getLandByLocation(zip) {
+        const results = await this.DBQuery("SELECT * FROM Land WHERE zip = ?", [zip]);
         return results;
     }
 
@@ -166,8 +172,8 @@ class land {
         return results;
     }
 
-    async getLandByIdLocation(id, lat, long) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND lat = ? AND long = ?", [id, lat, long]);
+    async getLandByIdLocation(id, zip) {
+        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND zip = ?", [id, zip]);
         return results;
     }
 
@@ -186,18 +192,18 @@ class land {
         return results;
     }
 
-    async getLandByLocationAcres(lat, long, acres) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE lat = ? AND long = ? AND acres = ?", [lat, long, acres]);
+    async getLandByLocationAcres(zip, acres) {
+        const results = await this.DBQuery("SELECT * FROM Land WHERE zip = ? AND acres = ?", [zip, acres]);
         return results;
     }
 
-    async getLandByLocationOwner(lat, long, owner) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE lat = ? AND long = ? AND owner = ?", [lat, long, owner]);
+    async getLandByLocationOwner(zip, owner) {
+        const results = await this.DBQuery("SELECT * FROM Land WHERE zip = ? AND owner = ?", [zip, owner]);
         return results;
     }
 
-    async getLandByLocationSuitability(lat, long, suitable) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE lat = ? AND long = ? AND suitability = ?", [lat, long, suitable]);
+    async getLandByLocationSuitability(zip, suitable) {
+        const results = await this.DBQuery("SELECT * FROM Land WHERE zip = ? AND suitability = ?", [zip, suitable]);
         return results;
     }
 
@@ -216,18 +222,18 @@ class land {
         return results;
     }
 
-    async getLandByIdLocationAcres(id, lat, long, acres) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND lat = ? AND long = ? AND acres = ?", [id, lat, long, acres]);
+    async getLandByIdLocationAcres(id, zip, acres) {
+        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND zip = ? AND acres = ?", [id, zip, acres]);
         return results;
     }
 
-    async getLandbyIdLocationOwner(id, lat, long, owner) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND lat = ? AND long = ? AND owner = ?", [id, lat, long, owner]);
+    async getLandbyIdLocationOwner(id, zip, owner) {
+        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND zip = ? AND owner = ?", [id, zip, owner]);
         return results;
     }
 
-    async getLandByIdLocationSuitability(id, lat, long, suitable) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND lat = ? AND long = ? AND suitability = ?", [id, lat, long, suitable]);
+    async getLandByIdLocationSuitability(id, zip, suitable) {
+        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND zip = ? AND suitability = ?", [id, zip, suitable]);
         return results;
     }
 
@@ -246,18 +252,18 @@ class land {
         return results;
     }
 
-    async getLandByLocationAcresOwner(lat, long, acres, owner) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE lat = ? AND long = ? AND acres = ? AND owner = ?", [lat, long, acres, owner]);
+    async getLandByLocationAcresOwner(zip, acres, owner) {
+        const results = await this.DBQuery("SELECT * FROM Land WHERE zip = ? AND acres = ? AND owner = ?", [zip, acres, owner]);
         return results;
     }
 
-    async getLandByLocationAcresSuitability(lat, long, acres, suitable) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE lat = ? AND long = ? AND acres = ? AND suitability = ?", [lat, long, acres, suitable]);
+    async getLandByLocationAcresSuitability(zip, acres, suitable) {
+        const results = await this.DBQuery("SELECT * FROM Land WHERE zip = ? AND acres = ? AND suitability = ?", [zip, acres, suitable]);
         return results;
     }
 
-    async getLandByLocationOwnerSuitability(lat, long, owner, suitable) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE lat = ? AND long = ? AND owner = ? AND suitability = ?", [lat, long, owner, suitable]);
+    async getLandByLocationOwnerSuitability(zip, owner, suitable) {
+        const results = await this.DBQuery("SELECT * FROM Land WHERE zip = ? AND owner = ? AND suitability = ?", [zip, owner, suitable]);
         return results;
     }
 
@@ -266,18 +272,18 @@ class land {
         return results;
     }
 
-    async getLandByIdLocationAcresOwner(id, lat, long, acres, owner) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND lat = ? AND long = ? AND acres = ? AND owner = ?", [id, lat, long, acres, owner]);
+    async getLandByIdLocationAcresOwner(id, zip, acres, owner) {
+        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND zip = ? AND acres = ? AND owner = ?", [id, zip, acres, owner]);
         return results;
     }
 
-    async getLandByIdLocationAcresSuitability(id, lat, long, acres, suitable) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND lat = ? AND long = ? AND acres = ? AND suitability = ?", [id, lat, long, acres, suitable]);
+    async getLandByIdLocationAcresSuitability(id, zip, acres, suitable) {
+        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND zip = ? AND acres = ? AND suitability = ?", [id, zip, acres, suitable]);
         return results;
     }
 
-    async getLandByIdLocationOwnerSuitability(id, lat, long, owner, suitable) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND lat = ? AND long = ? AND owner = ? AND suitability = ?", [id, lat, long, owner, suitable]);
+    async getLandByIdLocationOwnerSuitability(id, zip, owner, suitable) {
+        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND zip = ? AND owner = ? AND suitability = ?", [id, zip, owner, suitable]);
         return results;
     }
 
@@ -286,13 +292,13 @@ class land {
         return results;
     }
 
-    async getLandByLocationAcresOwnerSuitability(lat, long, acres, owner, suitable) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE lat = ? AND long = ? AND acres = ? AND owner = ? AND suitable = ?", [lat, long, acres, owner, suitable]);
+    async getLandByLocationAcresOwnerSuitability(zip, acres, owner, suitable) {
+        const results = await this.DBQuery("SELECT * FROM Land WHERE zip = ? AND acres = ? AND owner = ? AND suitable = ?", [zip, acres, owner, suitable]);
         return results;
     }
 
-    async getLandByAll(id, lat, long, acres, owner, suitable) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND lat = ? AND long = ? AND acres = ? AND owner = ? AND suitability = ?", [id, lat, long, acres, owner, suitable]);
+    async getLandByAll(id, zip, acres, owner, suitable) {
+        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND zip = ? AND acres = ? AND owner = ? AND suitability = ?", [id, zip, acres, owner, suitable]);
         return results;
     }
 }

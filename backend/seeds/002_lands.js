@@ -1,13 +1,15 @@
 const random = require('../util/random-generator');
 
 exports.seed = async function(knex) {
-    // Use knex to load 5 users
-    const users = await knex('User').limit(5);
-
-    // Map through each user, and generate a random student record with that user's email
-    const lands = users.map((user) => {
-      return random.land({ owner: user.username });
-    });
+    const users = await knex('User');
+    const num = 5;
+    const lands = [];
+    for (let i = 0; i < num; i++) {
+        const index = Math.floor(Math.random() * Object.keys(users).length);
+        const owner = users[index].username;
+        const land = random.land(({ owner: owner }));
+        lands.push(land);
+    }
 
     // Then insert the five students we generated
     await knex('Land').insert(lands);

@@ -13,8 +13,7 @@ CREATE TABLE Land (
     acres INT,
     owner VARCHAR(30) REFERENCES User(username),
     description VARCHAR(30),
-    coord_lat FLOAT,
-    coord_long FLOAT,
+    zip_code INT,
     suitable_for VARCHAR(30),
     starting_bid INT,
     image VARCHAR(50)
@@ -46,3 +45,5 @@ CREATE TABLE Review (
     rating INT,
     contents VARCHAR(200)
 );
+
+SELECT * FROM Land;
