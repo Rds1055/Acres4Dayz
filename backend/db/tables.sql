@@ -1,24 +1,19 @@
 CREATE DATABASE acres_tables;
 DROP DATABASE acres_tables;
 
-
-
 CREATE TABLE User (
     username VARCHAR(30) PRIMARY KEY,
-    password VARCHAR(30),
+    password VARCHAR(60),
     email VARCHAR(30),
-    phone VARCHAR(30),
-    image VARCHAR(50)
+    phone VARCHAR(30)
 );
 
 CREATE TABLE Land (
     ID SERIAL PRIMARY KEY,
-    Acres INT,
-    is_available BOOLEAN,
+    acres INT,
     owner VARCHAR(30) REFERENCES User(username),
     description VARCHAR(30),
-    coord_lat FLOAT,
-    coord_long FLOAT,
+    zip_code INT,
     suitable_for VARCHAR(30),
     starting_bid INT,
     image VARCHAR(50)
@@ -45,7 +40,10 @@ CREATE TABLE Bid (
 CREATE TABLE Review (
     ID SERIAL PRIMARY KEY,
     land_id INT REFERENCES Land(ID),
+    owner VARCHAR(30) REFERENCES User(username),
     reviewer VARCHAR(30) REFERENCES User(username),
     rating INT,
     contents VARCHAR(200)
 );
+
+SELECT * FROM Land;

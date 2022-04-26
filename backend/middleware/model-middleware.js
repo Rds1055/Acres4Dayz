@@ -1,5 +1,5 @@
 const connectToDatabase = require('../models/database-helpers.js');
-const User = require('../models/users');
+const User = require('../models/user');
 const Bid = require('../models/bid');
 const Contract = require('../models/contract');
 const Land = require('../models/land');
@@ -13,14 +13,14 @@ const Review = require('../models/review');
  * one through the whole chain
  */
 const createModelsMiddleware = async (req, res, next) => {
-    console.log('Creating models in middleware');
+    // console.log('Creating models in middleware');
     const { DBQuery, disconnect } = await connectToDatabase();
     req.models = {
-        user: User,
         bid: new Bid(DBQuery, disconnect),
         contract: new Contract(DBQuery, disconnect),
         land: new Land(DBQuery, disconnect),
-        review: new Review(DBQuery, disconnect)
+        review: new Review(DBQuery, disconnect),
+        user: new User(DBQuery, disconnect)
     }
     req.disconnect = disconnect;
     next();
@@ -32,7 +32,22 @@ const disconnectFromDatababaseMiddleware = (req, res, next) => {
     next();
 }
 
+// Log a request
+const requestLogMiddleware = (req, res, next) => {
+    // Grab the type of request
+    const method = req.method;
+    // Grab the request link
+    const url = req.protocol + "://" + req.get("host") + req.originalUrl;
+    // Grab the timestamp
+    const timestamp = Date.now();
+    // Previous variables
+    console.log(method, url, timestamp);
+    next();
+}
+
+
 module.exports = {
     createModelsMiddleware,
-    disconnectFromDatababaseMiddleware
+    disconnectFromDatababaseMiddleware,
+    requestLogMiddleware
 }
