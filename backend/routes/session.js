@@ -30,6 +30,7 @@ router.get('/', auth.authenticateJWT, async (req, res, next) => {
     console.error("Failed to get session:", err);
     res.status(500).json({message: err.toString()});
   }
+  next();
 });
 
 module.exports = router;
