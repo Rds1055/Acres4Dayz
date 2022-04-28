@@ -3,7 +3,7 @@ import axios from 'axios';
 const apiEndpoint = '';
 const apiConfig = {
     headers: {
-        Authorization: 'cmiller'
+        Authorization: `cmiller`
     }
 };
 
