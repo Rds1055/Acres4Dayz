@@ -35,7 +35,8 @@ CREATE TABLE Bid (
     land_id BIGINT UNSIGNED,
     top_bid INT,
     top_bidder VARCHAR(30),
-    FOREIGN KEY(land_id) REFERENCES Land(ID)
+    FOREIGN KEY(land_id) REFERENCES Land(ID),
+    FOREIGN KEY(top_bidder) REFERENCES User(username)
 );
 
 CREATE TABLE Review (
