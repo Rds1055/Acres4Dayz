@@ -62,7 +62,7 @@ const mixins = {
             ID: random.integer({ min: 10000000, max: 999999999 }),
             acres: random.integer({ min: 1000, max: 9999 }),
             owner: random.first().concat(random.last()),
-            description: "this is description",
+            description: random.paragraph().slice(0, 200),
             zip_code: random.integer({min: 10000, max: 99999}),
             suitable_for: "anyone",
             starting_bid: random.integer({ min: 100000, max: 999999 }),

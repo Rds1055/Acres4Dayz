@@ -11,34 +11,39 @@ CREATE TABLE User (
 CREATE TABLE Land (
     ID SERIAL PRIMARY KEY,
     acres INT,
-    owner VARCHAR(30) REFERENCES User(username),
-    description VARCHAR(30),
+    owner VARCHAR(30),
+    description VARCHAR(200),
     zip_code INT,
     suitable_for VARCHAR(30),
     starting_bid INT,
-    image VARCHAR(10)
+    image VARCHAR(10),
+    FOREIGN KEY(owner) REFERENCES User(username)
 );
 
 CREATE TABLE Contract (
     ID SERIAL PRIMARY KEY,
-    land_id INT REFERENCES Land(ID),
-    renter VARCHAR(30) REFERENCES User(username),
+    land_id BIGINT UNSIGNED,
+    renter VARCHAR(30),
     start DATE,
-    end DATE
+    end DATE,
+    FOREIGN KEY(land_id) REFERENCES Land(ID),
+    FOREIGN KEY(renter) REFERENCES User(username)
 );
-
 
 CREATE TABLE Bid (
     ID SERIAL PRIMARY KEY,
-    land_id INT REFERENCES Land(ID),
+    land_id BIGINT UNSIGNED,
     top_bid INT,
-    top_bidder VARCHAR(30)
+    top_bidder VARCHAR(30),
+    FOREIGN KEY(land_id) REFERENCES Land(ID)
 );
 
 CREATE TABLE Review (
     ID SERIAL PRIMARY KEY,
-    land_id INT REFERENCES Land(ID),
-    reviewer VARCHAR(30) REFERENCES User(username),
+    land_id BIGINT UNSIGNED,
+    reviewer VARCHAR(30),
     rating INT,
-    contents VARCHAR(200)
+    contents VARCHAR(200),
+    FOREIGN KEY(land_id) REFERENCES Land(ID),
+    FOREIGN KEY(reviewer) REFERENCES User(username)
 );
