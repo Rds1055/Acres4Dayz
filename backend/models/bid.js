@@ -15,11 +15,10 @@ class bid {
 
     async createBid(body) {
         const land = body.land;
-        const owner = body.owner;
         const bid = body.bid;
         const bidder = body.bidder;
 
-        const result = await this.DBQuery("INSERT INTO Bid(land_id, owner, top_bid, top_bidder) VALUES (?,?,?,?)", [land, owner, bid, bidder]);
+        const result = await this.DBQuery("INSERT INTO Bid(land_id, top_bid, top_bidder) VALUES (?,?,?,?)", [land, bid, bidder]);
         const newRecord = await this.DBQuery("SELECT * FROM Bid WHERE ID = ?", [result.insertId]);
         return newRecord;
     }
@@ -40,7 +39,7 @@ class bid {
     }
 
     async getBidsByOwner(owner) {
-        const results = await this.DBQuery("SELECT * FROM Bid WHERE owner = ?", [owner]);
+        const results = await this.DBQuery("SELECT Bid.* FROM Bid JOIN Land ON Bid.land_id = Land.ID WHERE Land.owner = ?", [owner]);
         return results;
     }
 

@@ -66,7 +66,7 @@ const mixins = {
             zip_code: random.integer({min: 10000, max: 99999}),
             suitable_for: "anyone",
             starting_bid: random.integer({ min: 100000, max: 999999 }),
-            image: "image link placeholder",
+            image: "farm" + random.integer({ min: 1, max: 5}).toString(),
             ...options,
         }
     },
@@ -75,8 +75,6 @@ const mixins = {
         return{
             ID: random.integer({ min: 10000000, max: 999999999 }),
             land_id: random.integer({ min: 10000000, max: 999999999 }),
-            // will need to update owner
-            owner: random.first().concat(random.last()),
             top_bid: random.integer({ min: 1, max: 999999999}),
             top_bidder: random.first().concat(random.last()),
             ...options
@@ -87,7 +85,6 @@ const mixins = {
         return{
             ID: random.integer({ min: 10000000, max: 999999999 }),
             land_id: random.integer({ min: 10000000, max: 999999999 }),
-            owner: random.first().concat(random.last()),
             renter: random.first().concat(random.last()),
             start: random.date(),
             end: random.date(),

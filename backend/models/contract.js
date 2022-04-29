@@ -16,16 +16,15 @@ class contract {
     async createContract(body) {
         const id = body.ID;
         const land = body.land_id;
-        const owner = body.owner;
         const renter = body.renter;
         const start = body.start;
         const end = body.end;
 
         let result;
         if (id === undefined) {
-            result = await this.DBQuery("INSERT INTO Contract(land_id, owner, renter, start, end) VALUES (?,?,?,?,?)", [land, owner, renter, start, end]);
+            result = await this.DBQuery("INSERT INTO Contract(land_id, renter, start, end) VALUES (?,?,?,?,?)", [land, renter, start, end]);
         } else {
-            result = await this.DBQuery("INSERT INTO Contract(ID, land_id, owner, renter, start, end) VALUES (?, ?,?,?,?,?)", [id, land, owner, renter, start, end]);
+            result = await this.DBQuery("INSERT INTO Contract(ID, land_id, renter, start, end) VALUES (?, ?,?,?,?,?)", [id, land, renter, start, end]);
         }
         
         const newRecord = await this.DBQuery("SELECT * FROM Contract WHERE ID = ?", [result.insertId]);
@@ -38,7 +37,7 @@ class contract {
     }
 
     async getContractsByOwner(owner) {
-        const results = await this.DBQuery("SELECT * FROM Contract WHERE owner = ?", [owner]);
+        const results = await this.DBQuery("SELECT Contract.* FROM Contract JOIN Land ON Contract.land_id = Land.ID WHERE Land.owner = ?", [owner]);
         return results;
     }
 

@@ -16,13 +16,12 @@ CREATE TABLE Land (
     zip_code INT,
     suitable_for VARCHAR(30),
     starting_bid INT,
-    image VARCHAR(50)
+    image VARCHAR(10)
 );
 
 CREATE TABLE Contract (
     ID SERIAL PRIMARY KEY,
     land_id INT REFERENCES Land(ID),
-    owner VARCHAR(30) REFERENCES User(username),
     renter VARCHAR(30) REFERENCES User(username),
     start DATE,
     end DATE
@@ -32,7 +31,6 @@ CREATE TABLE Contract (
 CREATE TABLE Bid (
     ID SERIAL PRIMARY KEY,
     land_id INT REFERENCES Land(ID),
-    owner VARCHAR(30) REFERENCES User(username),
     top_bid INT,
     top_bidder VARCHAR(30)
 );
@@ -40,10 +38,7 @@ CREATE TABLE Bid (
 CREATE TABLE Review (
     ID SERIAL PRIMARY KEY,
     land_id INT REFERENCES Land(ID),
-    owner VARCHAR(30) REFERENCES User(username),
     reviewer VARCHAR(30) REFERENCES User(username),
     rating INT,
     contents VARCHAR(200)
 );
-
-SELECT * FROM Land;

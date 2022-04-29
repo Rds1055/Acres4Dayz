@@ -8,14 +8,13 @@ exports.seed = async function(knex) {
     for (let i = 0; i < num; i++) {
         let index = Math.floor(Math.random() * Object.keys(lands).length);
         const land = lands[index].ID;
-        const owner = lands[index].owner;
         index = Math.floor(Math.random() * Object.keys(users).length);
         let renter = users[index].username;
-        while (renter === owner) {
+        while (renter === lands[index].owner) {
             index = Math.floor(Math.random() * Object.keys(users).length);
             renter = users[index].username;
         }
-        const contract = random.contract({ land_id: land, owner: owner, renter: renter });
+        const contract = random.contract({ land_id: land, renter: renter });
         contracts.push(contract);
     }
 
