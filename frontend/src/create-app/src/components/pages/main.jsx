@@ -9,9 +9,11 @@ var tests = [farm1, farm2, farm3, farm4, farm5, farm1, farm2, farm3, farm4, farm
 
 export const Main = (props) => {
   const {setScreen} = props;
+  const {setProduct} = props;
+
   return <>
     <div className="container mb-5 pb-5">
-    <div class="row">
+    <div className="row">
       {tests.map((test, index) =><>
         <div className="card text-center m-1" style={{ width: '18rem' }}>
           <div class="col">
@@ -20,6 +22,7 @@ export const Main = (props) => {
               <h5 className="card-title">Cow 4 sale</h5>
               <p className="card-text">MOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO</p>
               <btn className="btn btn-primary" onClick={() => {
+                setProduct({image:test, name:"", description:""});
                 setScreen(3);
               }}>View</btn>
             </div>

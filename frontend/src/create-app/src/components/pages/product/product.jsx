@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import cow from  "../../../temp/cow.jpg";
 
-export const Product = () => {
+export const Product = (props) => {
+
+  const {product} = props;
 
   var reviews = [];
   var name="COW";
@@ -13,7 +14,7 @@ export const Product = () => {
     <div className="container-fluid">
       <div className="row justify-content-sm-left">
         <div className="col-auto">
-          <img widt src={cow}/>
+          <img widt src={product.image}/>
         </div>
         <div className="col d-flex align-items-center">
           <div className="container-fluid">
