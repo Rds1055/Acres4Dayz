@@ -1,9 +1,16 @@
+<<<<<<< Updated upstream
 import { Login } from './pages/login-register.jsx';
 import { Layout } from './pages/layout.jsx';
 import { Main } from './pages/main.jsx';
 import { Product } from './pages/product.jsx';
 import { CreatePost } from './pages/createPost.jsx';
 import { Settings } from './pages/settings.jsx';
+=======
+import { Login } from './pages/login-register.jsx'
+import { Layout } from './pages/layout.jsx'
+import { Main } from './pages/main.jsx'
+import { Product } from './pages/product/product.jsx'
+>>>>>>> Stashed changes
 import { useEffect, useState } from "react";
 import React from 'react';
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import cow from  "../../temp/cow.jpg";
+import cow from  "../../../temp/cow.jpg";
 
 export const Product = () => {
 
@@ -13,7 +13,7 @@ export const Product = () => {
     <div className="container-fluid">
       <div className="row justify-content-sm-left">
         <div className="col-auto">
-          <img src={cow}/>
+          <img widt src={cow}/>
         </div>
         <div className="col d-flex align-items-center">
           <div className="container-fluid">
