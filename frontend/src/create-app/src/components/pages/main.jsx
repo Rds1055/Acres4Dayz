@@ -22,7 +22,6 @@ export const Main = (props) => {
               <h5 className="card-title">Cow 4 sale</h5>
               <p className="card-text">MOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO</p>
               <btn className="btn btn-primary" onClick={() => {
-                setProduct({image:test, name:"", description:""});
                 setScreen(3);
               }}>View</btn>
             </div>

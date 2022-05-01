@@ -22,7 +22,7 @@ export const Layout = (props) => {
         </div>
         <div className="col">
           <nav className="navbar justify-content-center">
-            <h1 clas>Acres4Dayz</h1>
+            <h1>Acres4Dayz</h1>
           </nav>
         </div>
         <div className="col">
