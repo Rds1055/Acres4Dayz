@@ -82,12 +82,13 @@ const mixins = {
     },
 
     contract: (options = {}) => {
+        const year = random.integer({ min: 2022, max: 2025});
         return{
             ID: random.integer({ min: 10000000, max: 999999999 }),
             land_id: random.integer({ min: 10000000, max: 999999999 }),
             renter: random.first().concat(random.last()),
-            start: random.date(),
-            end: random.date(),
+            start: random.date({ year: year}),
+            end: random.date({ year: random.integer({ min: year + 1, max: year + 5})}),
             ...options
         } 
     },
