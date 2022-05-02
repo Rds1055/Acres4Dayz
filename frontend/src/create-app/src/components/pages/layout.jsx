@@ -1,6 +1,7 @@
 import {Link} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 export const Layout = ({account, setAccount}) => {
-
+  const navigate = useNavigate();
   return <>
     <nav className="navbar text-white bg-dark mb-2">
       <div className="container-fluid row">
@@ -21,16 +22,19 @@ export const Layout = ({account, setAccount}) => {
             {account != undefined &&
               <div>
                 <Link to="/create-listing" >Create Listing</Link>
+                
                 <button 
                   type="button" 
                   className="btn btn-md bg-primary text-white"
-                  onClick={() => {setAccount(undefined) }}>
+                  onClick={() => {
+                    setAccount(undefined);
+                    navigate('/');
+                  }}>
                     Logout
                 </button>
               </div>
         
               }
-            
           </nav>
         </div>
       </div>
