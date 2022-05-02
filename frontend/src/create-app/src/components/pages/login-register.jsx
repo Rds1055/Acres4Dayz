@@ -1,9 +1,8 @@
 import { TextField } from "../common/textField.jsx";
 import { useEffect, useState } from "react";
+import {useNavigate} from 'react-router-dom';
 
-export const Login = (props) => {
-  const {setAccount} = props;
-  const {setScreen} = props;
+export const Login = ({setAccount}) => {
   const [loginUsername, setLoginUsername] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [registerUsername, setRegisterUsername] = useState('');
@@ -11,6 +10,8 @@ export const Login = (props) => {
   const [registerConfirmPassword, setRegisterConfirmPassword] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+
+  const navigate = useNavigate();
 
   return <>
     <div className='container-fluid mt-5'>
@@ -26,7 +27,7 @@ export const Login = (props) => {
           <button type="button" className="btn btn-md btn-primary"
           onClick={() => {
             setAccount({username:loginUsername, password:loginPassword});
-            setScreen(1);
+            navigate('/');
           }}>Login</button>}
         </div>
         <div className='col ms-3'>
@@ -42,7 +43,6 @@ export const Login = (props) => {
           <button type="button" className="btn btn-md btn-primary"
           onClick={() => {
             setAccount({username:loginUsername, password:loginPassword});
-            setScreen(1);
           }}>Register</button>}
         </div>
         <div className='col-2'></div>

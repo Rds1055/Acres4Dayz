@@ -1,9 +1,9 @@
 import { TextField } from "../common/textField.jsx";
 import { useEffect, useState } from "react";
 
-export const CreateListing = (props) => {
-  const {setAccount} = props;
-  const {setScreen} = props;
+export const CreateListing = ({setAccount}) => {
+  const [loginUsername, setLoginUsername] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
   const [changePassword, setChangePassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [registerUsername, setRegisterUsername] = useState('');
@@ -19,6 +19,7 @@ export const CreateListing = (props) => {
           <TextField label="Password:" value={confirmPassword} setValue={setConfirmPassword}/>
           {(loginUsername == '' || loginPassword == '') &&
           <button type="button" className="btn btn-md btn-primary" disabled>Login</button>}
+
           {loginUsername !='' && loginPassword != '' &&
           <button type="button" className="btn btn-md btn-primary"
           onClick={() => {

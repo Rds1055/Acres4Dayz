@@ -1,33 +1,36 @@
 import { Login } from './pages/login-register.jsx';
 import { Layout } from './pages/layout.jsx';
 import { Main } from './pages/main.jsx';
-import { CreatePost } from './pages/createPost.jsx';
 import { Settings } from './pages/settings.jsx';
-import { Product } from './pages/product/product.jsx'
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 
 import { useEffect, useState } from "react";
 import React from 'react';
+import { ListingMini, ListingView} from './pages/listing';
+import { CreateListing } from './pages/createListing.jsx';
+
 
 export const App = () => {
   const [ account, setAccount ] = useState(undefined);
-  const [ screen, setScreen ] = useState(1);
   const [ product, setProduct] = useState(undefined);
-  function setScreenValue(value){
-    setScreen(value);
-  }
+
   function setAccountValue(value){
     setAccount(value);
   }
   return <>
     <div className="vh-100 overflow-hidden">
-      <Layout account = {account} setAccount={setAccountValue} screen={screen} setScreen={setScreenValue}/>
-      <div className="h-100 overflow-scroll">
-      {screen == 1 && <Main setScreen={setScreenValue} setProduct={setProduct}/>}
-      {screen == 2 && <Login setAccount={setAccountValue} setScreen={setScreenValue}/>}
-      {screen == 3 && <Product product={product}/>}
-      {screen == 4 && <CreatePost setScreen={setScreenValue}/>}
-      {screen == 5 && <Settings account={account} setAccount={setAccountValue}/>}
-    </div>
+      <div className="h-100 overflow-scroll"> 
+        <Router>
+          <Layout account = {account} setAccount={setAccountValue}/>
+          <Routes>
+            <Route path="/" element={<Main setProduct={setProduct}/>} ></Route>
+            <Route path="/login" element={<Login setAccount={setAccount} />} ></Route>
+            <Route path="/listing/:id" element={<ListingView/>} ></Route>
+            <Route path="/settings" element={<Settings account={account} setAccount={setAccount}/>} ></Route>
+            <Route path="/create-listing" element={<CreateListing setAccount={setAccount}/>} ></Route>
+          </Routes>
+        </Router>
+      </div>
     </div>
   </>;
 }
