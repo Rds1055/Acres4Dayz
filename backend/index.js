@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 // Import any route handlers here.
 const userRoutes = require('./routes/user');
@@ -11,15 +12,15 @@ const reviewRoutes = require("./routes/review");
 
 // Import any middleware here
 const middleware = require("./middleware/model-middleware");
-const land = require('./models/land');
 
 // Start by defining the express app instance
 const app = express();
-const port = 52570;
+const port = 3001;
 
 // On every request, this gets called first. This is the first step in our "middleware chain".
 // We put this before anything else because we know our route handlers are going to need connections
 // to the database
+app.use(cors());
 app.use(middleware.createModelsMiddleware);
 app.use(middleware.requestLogMiddleware);
 app.use(bodyParser.json());
