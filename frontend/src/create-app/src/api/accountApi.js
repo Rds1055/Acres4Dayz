@@ -50,7 +50,7 @@ export const addUser = (user) => new Promise((resolve, reject) => {
 });
 
 export const login = (info) => new Promise((resolve, reject) => {
-    axios.get(`${apiEndpoint}/user/${info}`, user, apiConfig)
+    axios.get(`${apiEndpoint}/session/`, info, apiConfig)
         .then(x => token = x)
         .catch(x => {
             alert(x);

@@ -6,13 +6,14 @@ import farm4 from "../../images/4.jpg";
 import farm5 from "../../images/5.jpg";
 import { ListingMini } from "./listing/listingMini";
 import { Listing } from "../../models/Listing";
+import { getProducts } from "../../api/accountApi.js"
 
 
 export const Main = ({setProduct}) => {
   const [listings, setListings] = useState(undefined);
 
   useEffect(() => {
-      getListings().then(x =>
+      getProducts().then(x =>
       {
         setListings(x);
       }
