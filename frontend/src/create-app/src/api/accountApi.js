@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const token = '';
-const apiEndpoint = 'http://localhost:3001/';
+const apiEndpoint = 'http://localhost:3001';
 const apiConfig = {
     headers: {
         Authorization: `Bearer ${token}`
