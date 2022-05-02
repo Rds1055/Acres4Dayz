@@ -23,7 +23,7 @@ export const getProducts = (params) => new Promise((resolve, reject) => {
         _apiConfig.params = params;
     }
 
-    axios.get(`${apiEndpoint}/land/`, _apiConfig)
+    axios.get(`${apiEndpoint}/land`, _apiConfig)
         .then(x => resolve(x.data))
         .catch(x => {
             alert(x);
