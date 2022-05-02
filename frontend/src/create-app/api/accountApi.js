@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-const apiEndpoint = '';
+const token = '';
+const apiEndpoint = 'localhost:3001/';
 const apiConfig = {
     headers: {
-        Authorization: `cmiller`
+        Authorization: `Bearer ${token}`
     }
 };
 
@@ -50,7 +51,7 @@ export const addUser = (user) => new Promise((resolve, reject) => {
 
 export const login = (info) => new Promise((resolve, reject) => {
     axios.get(`${apiEndpoint}/user/${info}`, user, apiConfig)
-        .then(x => resolve(x.data))
+        .then(x => token = x)
         .catch(x => {
             alert(x);
             reject(x);

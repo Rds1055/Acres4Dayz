@@ -9,11 +9,19 @@ import { Listing } from "../../models/Listing";
 
 
 export const Main = ({setProduct}) => {
-  const [listings, setListings] = useState([
-    new Listing(1, "Cow", "MOOOOOOOOO", farm1, 200, 1),
-    new Listing(2, "Cow", "OOOOO", farm2, 500, 2)
-  ]);
+  const [listings, setListings] = useState(undefined);
 
+  useEffect(() => {
+      getProducts().then(x =>
+      {
+        setProducts(x);
+      }
+      );
+    }, []);
+
+  if(!listings){
+    return <>loading...</>;
+  }
   return <>
     <div className="container mb-5 pb-5">
     <div className="row">
