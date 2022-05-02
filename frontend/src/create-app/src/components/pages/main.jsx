@@ -12,9 +12,9 @@ export const Main = ({setProduct}) => {
   const [listings, setListings] = useState(undefined);
 
   useEffect(() => {
-      getProducts().then(x =>
+      getListings().then(x =>
       {
-        setProducts(x);
+        setListings(x);
       }
       );
     }, []);
