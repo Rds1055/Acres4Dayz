@@ -40,7 +40,7 @@ export const addReview = (productId, review) => new Promise((resolve, reject) =>
         });
 });
 
-export const addUser = (user) => new Promise((resolve, reject) => {
+export const register = (user) => new Promise((resolve, reject) => {
     axios.post(`${apiEndpoint}/user/`, user, apiConfig)
         .then(x => resolve(x.data))
         .catch(x => {
@@ -49,12 +49,16 @@ export const addUser = (user) => new Promise((resolve, reject) => {
         });
 });
 
-export const login = (info) => new Promise((resolve, reject) => {
+export const login = (info, setLogin) => new Promise((resolve, reject) => {
     axios.get(`${apiEndpoint}/session/`, info, apiConfig)
-        .then(x => token = x)
+        .then(x => {
+          token = x;
+          setLogin('Success');
+        })
         .catch(x => {
-            alert(x);
-            reject(x);
+          setLogin('failed');
+          console.log(x);
+          reject(x);
         });
 });
 

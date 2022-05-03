@@ -7,7 +7,7 @@ import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import { useEffect, useState } from "react";
 import React from 'react';
 import { ListingMini, ListingView} from './pages/listing';
-import { CreateListing } from './pages/createListing.jsx';
+import { CreatePost } from './pages/createPost.jsx';
 
 
 export const App = () => {
@@ -19,15 +19,15 @@ export const App = () => {
   }
   return <>
     <div className="vh-100 overflow-hidden">
-      <div className="h-100 overflow-scroll"> 
+      <div className="h-100 overflow-scroll">
         <Router>
           <Layout account = {account} setAccount={setAccountValue}/>
           <Routes>
             <Route path="/" element={<Main setProduct={setProduct}/>} ></Route>
-            <Route path="/login" element={<Login setAccount={setAccount} />} ></Route>
-            <Route path="/listing/:id" element={<ListingView/>} ></Route>
-            <Route path="/settings" element={<Settings account={account} setAccount={setAccount}/>} ></Route>
-            <Route path="/create-listing" element={<CreateListing setAccount={setAccount}/>} ></Route>
+            <Route path="/login" element={account == undefined? <Login setAccount={setAccount} /> : <Main setProduct={setProduct}/>} ></Route>
+            <Route path="/listing/:listing" element={<ListingView/>} ></Route>
+            <Route path="/settings" element={account != undefined? <Settings account={account} setAccount={setAccount}/> : <Main setProduct={setProduct}/>} ></Route>
+            <Route path="/createPost" element={account != undefined? <CreatePost setAccount={setAccount}/> : <Main setProduct={setProduct}/>} ></Route>
           </Routes>
         </Router>
       </div>

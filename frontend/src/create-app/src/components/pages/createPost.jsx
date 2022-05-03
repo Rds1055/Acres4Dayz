@@ -12,10 +12,10 @@ export const CreatePost = (props) => {
 
   const [ title, setTitle ] = useState('');
   const [ description, setDescription ] = useState('');
-  const [ acres, setAcres ] = useState(0);
+  const [ acres, setAcres ] = useState();
   const [ suitability, setSuitability ] = useState('');
   const [ image, setImage ] = useState('farm1');
-  const [ zip, setZip ] = useState(0);
+  const [ zip, setZip ] = useState();
 
   return <>
     <div className="container rounded-bottom border">
@@ -27,39 +27,57 @@ export const CreatePost = (props) => {
           <TextField label="Acres" value={acres} setValue={setAcres} />
         </div>
         <div className="col">
-          <TextField label="Suitability" value={acres} setValue={setAcres} />
+          <TextField label="Suitability" value={suitability} setValue={setSuitability} />
+        </div>
+        <div className="col">
+          <TextField label="Zip Code" value={zip} setValue={setZip} />
         </div>
       </div>
       <div className="row">
         <div className="col text-center">
           <img src={farm1} alt="Logo" style={{width:'10rem'}} className="me-4"/>
-          <button type="button" className="btn btn-secondary me-4" style={{width:'10rem'}} onClick={() => {
+
+          {image == 'farm1' && <button type="button" className="btn btn-success me-4" style={{width:'10rem'}} disabled>1</button>}
+          {image != 'farm1' && <button type="button" className="btn btn-primary me-4" style={{width:'10rem'}} onClick={() => {
             setImage('farm1');
-          }}>1</button>
+          }}>1</button>}
+
         </div>
         <div className="col text-center">
           <img src={farm2} alt="Logo" style={{width:'10rem'}} className="me-4"/>
-          <button type="button" className="btn btn-secondary me-4" style={{width:'10rem'}} onClick={() => {
+
+          {image == 'farm2' && <button type="button" className="btn btn-success me-4" style={{width:'10rem'}} disabled>2</button>}
+          {image != 'farm2' && <button type="button" className="btn btn-primary me-4" style={{width:'10rem'}} onClick={() => {
             setImage('farm2');
-          }}>2</button>
+          }}>2</button>}
+
         </div>
         <div className="col text-center">
           <img src={farm3} alt="Logo" style={{width:'10rem'}} className="me-4"/>
-          <button type="button" className="btn btn-secondary me-4" style={{width:'10rem'}} onClick={() => {
+
+
+          {image == 'farm3' && <button type="button" className="btn btn-success me-4" style={{width:'10rem'}} disabled>3</button>}
+          {image != 'farm3' && <button type="button" className="btn btn-primary me-4" style={{width:'10rem'}} onClick={() => {
             setImage('farm3');
-          }}>3</button>
+          }}>3</button>}
         </div>
         <div className="col text-center">
           <img src={farm4} alt="Logo" style={{width:'10rem'}} className="me-4"/>
-          <button type="button" className="btn btn-secondary me-4" style={{width:'10rem'}} onClick={() => {
+
+          {image == 'farm4' && <button type="button" className="btn btn-success me-4" style={{width:'10rem'}} disabled>4</button>}
+          {image != 'farm4' && <button type="button" className="btn btn-primary me-4" style={{width:'10rem'}} onClick={() => {
             setImage('farm4');
-          }}>4</button>
+          }}>4</button>}
+
         </div>
         <div className="col text-center">
           <img src={farm5} alt="Logo" style={{width:'10rem'}} className="me-4"/>
-          <button type="button" className="btn btn-secondary me-4" style={{width:'10rem'}} onClick={() => {
+
+          {image == 'farm5' && <button type="button" className="btn btn-success me-4" style={{width:'10rem'}} disabled>5</button>}
+          {image != 'farm5' && <button type="button" className="btn btn-primary me-4" style={{width:'10rem'}} onClick={() => {
             setImage('farm5');
-          }}>5</button>
+          }}>5</button>}
+
         </div>
       </div>
       <div className="row pb-2">
@@ -69,7 +87,7 @@ export const CreatePost = (props) => {
       </div>
       <div className="row pb-2">
         <div className="col">
-          {(title == '' || description == '') && <button type="button" className="btn btn-md btn-primary" disabled>Submit</button>}
+          {(title == '' || description == '' || acres == '' || suitability == '' || zip == '') && <button type="button" className="btn btn-md btn-primary" disabled>Submit</button>}
           {title != '' && description != '' && <btn className="btn btn-primary" onClick={() => {
             setScreen(1);
           }}>Submit</btn>}

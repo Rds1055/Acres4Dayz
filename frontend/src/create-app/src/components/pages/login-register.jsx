@@ -1,6 +1,7 @@
 import { TextField } from "../common/textField.jsx";
 import { useEffect, useState } from "react";
 import {useNavigate} from 'react-router-dom';
+import { login, register } from "../../api/accountApi"
 
 export const Login = ({setAccount}) => {
   const [loginUsername, setLoginUsername] = useState('');
@@ -10,6 +11,7 @@ export const Login = ({setAccount}) => {
   const [registerConfirmPassword, setRegisterConfirmPassword] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [loginReq, setLoginReq] = useState('success');
 
   const navigate = useNavigate();
 
@@ -26,9 +28,15 @@ export const Login = ({setAccount}) => {
           {loginUsername !='' && loginPassword != '' &&
           <button type="button" className="btn btn-md btn-primary"
           onClick={() => {
-            setAccount({username:loginUsername, password:loginPassword});
-            navigate('/');
-          }}>Login</button>}
+            let test = login({username:loginUsername, password:loginPassword}, setLoginReq);
+            console.log(test);
+            if(login == "success"){
+              setAccount({username:loginUsername, password:loginPassword});
+              navigate('/');
+            }
+          }
+          }>Login</button>}
+          {loginReq == 'failed' && <p>Incorrect Login</p>}
         </div>
         <div className='col ms-3'>
           <h2 className='text-center'>Register</h2>
@@ -42,7 +50,12 @@ export const Login = ({setAccount}) => {
           {registerUsername !='' && registerPassword != '' &&
           <button type="button" className="btn btn-md btn-primary"
           onClick={() => {
-            setAccount({username:loginUsername, password:loginPassword});
+            let test;
+            register({username:registerUsername, password:registerPassword, email:email, phone:phone}).then( x =>{
+              test = x;
+            });
+            console.log(test);
+            setAccount({username:registerUsername, password:registerPassword});
             navigate('/');
 
           }}>Register</button>}

@@ -8,7 +8,7 @@ const connectToDatabase = async () => {
         const DBConnection = mysql.createConnection({
             host: 'localhost',
             user: 'root',
-            password: 'DeclanRice41!',
+            password: 'wyZmKWLv#t3h7E',
             insecureAuth: true,
             database: 'acres_tables'
         });
