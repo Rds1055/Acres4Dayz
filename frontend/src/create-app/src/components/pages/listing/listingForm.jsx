@@ -2,16 +2,17 @@ import { useState } from "react";
 import { TextField, TextAreaField, SelectField, Rating} from "../../common";
 
 
-export const ListingForm = ({onReviewAdded}) => {
+export const ListingForm = (onReviewAdded, ID, name) => {
+  console.log(ID);
+  console.log(name);
+  console.log(onReviewAdded);
 
-    const [options] = useState([  
+    const [options] = useState([
     { value: 1, label: '1 star' },
     { value: 2, label: '2 stars' },
     { value: 3, label: '3 stars' },
     { value: 4, label: '4 stars' },
     { value: 5, label: '5 stars' }]);
-
-    const [name, setName] = useState('');
     const [comment, setComment] = useState('');
     const [rating, setRating] = useState('');
 
@@ -23,14 +24,8 @@ export const ListingForm = ({onReviewAdded}) => {
                 </div>
                 <div className="card-body">
                     <div className="row">
-                        <div className="col-6">         
-                            <TextField 
-                                label="Your name"
-                                value={name}
-                                setValue={setName} />
-                        </div>
                         <div className="d-flex justify-content-around col-6">
-                            <SelectField 
+                            <SelectField
                                 label="Rating"
                                 value={rating}
                                 setValue={setRating}
@@ -38,10 +33,10 @@ export const ListingForm = ({onReviewAdded}) => {
                             <Rating value={rating} />
                         </div>
                     </div>
-                
+
                     <div className="row">
                         <div className="col-12 w-100">
-                            <TextAreaField 
+                            <TextAreaField
                                 label="Comment"
                                 value={comment}
                                 setValue={setComment} />
@@ -54,9 +49,9 @@ export const ListingForm = ({onReviewAdded}) => {
                                 </button>}
                             {(name != '' && comment != '' && rating != '') && <button type="button" className="btn btn-success bg-primary" enabled
                                 onClick={() => {
-                                    setName('');
-                                    setComment('');
-                                    setRating('');
+                                  onReviewAdded({reviewer: name, land_id:ID, rating: rating, contents: comment});
+                                  setComment('');
+                                  setRating('');
                                 }
                             }>
                                 Submit

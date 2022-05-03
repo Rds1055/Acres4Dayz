@@ -5,9 +5,10 @@ import farm2 from "../../../images/2.jpg";
 import farm3 from "../../../images/3.jpg";
 import farm4 from "../../../images/4.jpg";
 import farm5 from "../../../images/5.jpg";
+import { useNavigate } from "react-router-dom";
 
 export const ListingMini = ({listing}) => {
-
+const navigate = useNavigate();
 var farms = {'farm1':farm1, 'farm2':farm2, 'farm3':farm3, 'farm4':farm4, 'farm5':farm5};
 
   return <>
@@ -17,7 +18,10 @@ var farms = {'farm1':farm1, 'farm2':farm2, 'farm3':farm3, 'farm4':farm4, 'farm5'
             <div className="card-body">
               <h5 className="card-title">{listing.owner}</h5>
               <p className="card-text">{listing.description}</p>
-              <Link to={`/listing/${listing}`}  state={{from: {listing}}} className="btn btn-primary">View</Link>
+              <Link to={`/listing/${listing}`}  state={{from: {listing}}} className="btn btn-primary"
+              onClick={() => {
+                navigate(`/listing/${listing}`);
+              }}>View</Link>
             </div>
           </div>
         </div>
