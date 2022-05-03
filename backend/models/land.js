@@ -20,9 +20,9 @@ class land {
 
         let result;
         if (id === undefined) {
-            result = await this.DBQuery("INSERT INTO Land(acres, owner, description, zip_code, suitable_for, starting_bid, image) VALUES (?,?,?,?,?,?,?,?)", [acres, owner, description, zip, suitable, bid, image]);
+            result = await this.DBQuery("INSERT INTO Land(acres, owner, description, zip_code, suitable_for, starting_bid, image) VALUES (?,?,?,?,?,?,?)", [acres, owner, description, zip, suitable, bid, image]);
         } else {
-            result = await this.DBQuery("INSERT INTO Land(ID, acres, owner, description, zip_code, suitable_for, starting_bid, image) VALUES (?,?,?,?,?,?,?,?,?)", [id, acres, owner, description, zip, suitable, bid, image]);
+            result = await this.DBQuery("INSERT INTO Land(ID, acres, owner, description, zip_code, suitable_for, starting_bid, image) VALUES (?,?,?,?,?,?,?,?)", [id, acres, owner, description, zip, suitable, bid, image]);
         }
         
         const newRecord = await this.DBQuery("SELECT * FROM Land WHERE ID = ?", [result.insertId]);

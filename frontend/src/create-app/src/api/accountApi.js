@@ -2,11 +2,7 @@ import axios from 'axios';
 
 var token;
 const apiEndpoint = 'http://localhost:3001';
-const apiConfig = {
-    headers: {
-        Authorization: `Bearer ${token}`
-    }
-};
+var apiConfig;
 
 export const getToken = () => {
   return token;
@@ -39,14 +35,13 @@ export const addProduct = (product) => new Promise((resolve, reject) => {
     axios.post(`${apiEndpoint}/land/`, product, apiConfig)
         .then(x => resolve(x.data))
         .catch(x => {
-          console.log(product);
           alert(x);
           reject(x);
         });
 });
 
 export const addReview = (productId, review) => new Promise((resolve, reject) => {
-    axios.post(`${apiEndpoint}/land/${productId}`, review, apiConfig)
+    axios.post(`${apiEndpoint}/review/land/${productId}`, review, apiConfig)
         .then(x => resolve(x.data))
         .catch(x => {
             alert(x);
@@ -63,15 +58,24 @@ export const register = (user) => new Promise((resolve, reject) => {
         });
 });
 
-export const login = (info, setLogin) => new Promise((resolve, reject) => {
+export const login = (info, setLogin=undefined) => new Promise((resolve, reject) => {
     axios.post(`${apiEndpoint}/session/`, info, apiConfig)
         .then(x => {
           token = x.data;
+          apiConfig = {
+              headers: {
+                  Authorization: `Bearer ${token}`
+              }
+          };
           resolve(x.data);
-          setLogin('success');
+          if(setLogin){
+            setLogin('success');
+          }
         })
         .catch(x => {
-          setLogin('failed');
+          if(setLogin){
+            setLogin('failed');
+          }
           reject(x);
         });
 });
@@ -87,6 +91,15 @@ export const editUser = (username, params) => new Promise((resolve, reject) =>{
 
 export const getUserInfo = () => new Promise((resolve, reject) => {
     axios.get(`${apiEndpoint}/session/`, apiConfig)
+        .then(x => resolve(x.data))
+        .catch(x => {
+          alert(x);
+          reject(x);
+        });
+});
+
+export const getReviews = (id) => new Promise((resolve, reject) => {
+    axios.get(`${apiEndpoint}/review/land/${id}`, apiConfig)
         .then(x => resolve(x.data))
         .catch(x => {
           alert(x);

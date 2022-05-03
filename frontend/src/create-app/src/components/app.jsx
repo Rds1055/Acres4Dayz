@@ -27,7 +27,7 @@ export const App = () => {
             <Routes>
               <Route path="/" element={<Main setProduct={setProduct}/>} ></Route>
               <Route path="/login" element={account == undefined? <Login setAccount={setAccount} /> : <Main setProduct={setProduct}/>} ></Route>
-              <Route path="/listing/:listing" element={<ListingView/>} ></Route>
+              <Route path="/listing/:listing" element={<ListingView account={account}/>} ></Route>
               <Route path="/settings" element={account != undefined? <Settings account={account} setAccount={setAccount}/> : <Main setProduct={setProduct}/>} ></Route>
               <Route path="/createPost" element={account != undefined? <CreatePost account={account}/> : <Main setProduct={setProduct}/>} ></Route>
             </Routes>

@@ -10,11 +10,10 @@ export const Settings = ({account, setAccount, token, setToken}) => {
   const [email, setEmail] = useState('');
 
   useEffect(() => {
-  console.log(getToken());
       getUserInfo().then(x =>
       {
-        let test = setLocal(x);
-        console.log(test);
+        let test = setLocal(x[0]);
+        console.log(local);
       }
       );
     }, []);
@@ -40,9 +39,10 @@ export const Settings = ({account, setAccount, token, setToken}) => {
         <button type="button" className="btn btn-md btn-primary"
         onClick={() => {
           if(password == confirmPassword){
-            editUser(local.username, {password:password}).then(x => setLocal(x));
+            editUser(local.username, {password:password}).then(x => setLocal(x[0]));
+            console.log(local);
             setAccount({username:local.username, password:password});
-            login(account.username, account.password);
+            login(account.username, account.password).then(x=>console.log(x));
             setPassword('');
             setConfirmPassword('');
           }
@@ -56,20 +56,20 @@ export const Settings = ({account, setAccount, token, setToken}) => {
         {email != '' &&
         <button type="button" className="btn btn-md btn-primary"
         onClick={() => {
-          editUser(local.username, {email:email}).then(x => setLocal(x));
+          editUser(local.username, {email:email}).then(x => setLocal(x[0]));
           login(account.username, account.password);
           setEmail('');
         }}>Submit</button>}
       </div>
       <div className='col ms-3'>
-        <h2 className='text-center'>Change Phone Number</h2>
+        <h2 className='text-center'>Change Phone</h2>
         <TextField label="Phone Number:" value={phone} setValue={setPhone}/>
         {phone == '' &&
         <button type="button" className="btn btn-md btn-primary" disabled>Submit</button>}
         {phone != '' &&
         <button type="button" className="btn btn-md btn-primary"
         onClick={() => {
-          editUser(local.username, {phone:phone}).then(x => setLocal(x));
+          editUser(local.username, {phone:phone}).then(x => setLocal(x[0]));
           login(account.username, account.password);
           setPhone('');
         }}>Submit</button>}
