@@ -58,16 +58,4 @@ router.put('/:username', async (req, res, next) => {
   next();
 });
 
-router.delete('/:username', async (req, res, next) => {
-  try {
-    const user = req.params.username;
-    const result = await req.models.user.deleteUser(user);
-    res.status(204).end();
-  } catch (err) {
-    console.error('Failed to delete user:', err);
-    res.status(500).json({message: err.toString()});
-  }
-  next();
-});
-
 module.exports = router;

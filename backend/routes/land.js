@@ -38,16 +38,4 @@ router.put('/:id', async (req, res, next) => {
     next();
 });
 
-router.delete('/:id', async (req, res, next) => {
-    try {
-        const id = req.params.id;
-        const result = await req.models.land.deleteLand(id);
-        res.status(204).end();
-    } catch (err) {
-        console.error('Failed to delete land:', err);
-        res.status(500).json({ message: err.toString()});
-    }
-    next();
-});
-
 module.exports = router;

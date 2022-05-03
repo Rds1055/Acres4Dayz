@@ -72,11 +72,6 @@ class User {
     async updateUserPhone(username, phone) {
         const results = await this.DBQuery("UPDATE User SET phone = ? WHERE username = ?", [phone, username]);
     };
-
-    async deleteUser(username) {
-        const result = await this.DBQuery("DELETE FROM User WHERE username = ?", [username]);
-        return result;
-    }
 }
 
 module.exports = User;

@@ -29,11 +29,6 @@ class land {
         return newRecord;
     }
 
-    async deleteLand(id) {
-        const result = this.DBQuery("DELETE FROM Land WHERE ID = ?", [id]);
-        return result;
-    }
-
     async updateLand(id, body) {
         const description = body.description;
         const image = body.image;
