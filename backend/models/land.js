@@ -158,7 +158,7 @@ class land {
     }
 
     async getLandByAcres(acres) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE Acres > ?", [acres]);
+        const results = await this.DBQuery("SELECT * FROM Land WHERE acres >= ?", [acres]);
         return results;
     }
 
@@ -178,7 +178,7 @@ class land {
     }
 
     async getLandByIdAcres(id, acres) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND acres = ?", [id, acres]);
+        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND acres >= ?", [id, acres]);
         return results;
     }
 
@@ -193,7 +193,7 @@ class land {
     }
 
     async getLandByLocationAcres(zip, acres) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE zip = ? AND acres = ?", [zip, acres]);
+        const results = await this.DBQuery("SELECT * FROM Land WHERE zip = ? AND acres >= ?", [zip, acres]);
         return results;
     }
 
@@ -208,12 +208,12 @@ class land {
     }
 
     async getLandByAcresOwner(acres, owner) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE acres = ? AND owner = ?", [acres, owner]);
+        const results = await this.DBQuery("SELECT * FROM Land WHERE acres >= ? AND owner = ?", [acres, owner]);
         return results;
     }
 
     async getLandByAcresSuitability(acres, suitable) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE acres = ? AND suitability = ?", [acres, suitable]);
+        const results = await this.DBQuery("SELECT * FROM Land WHERE acres >= ? AND suitability = ?", [acres, suitable]);
         return results;
     }
 
@@ -223,7 +223,7 @@ class land {
     }
 
     async getLandByIdLocationAcres(id, zip, acres) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND zip = ? AND acres = ?", [id, zip, acres]);
+        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND zip = ? AND acres >= ?", [id, zip, acres]);
         return results;
     }
 
@@ -238,12 +238,12 @@ class land {
     }
 
     async getLandByIdAcresOwner(id, acres, owner) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND acres = ? AND owner = ?", [id, acres, owner]);
+        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND acres >= ? AND owner = ?", [id, acres, owner]);
         return results;
     }
 
     async getLandByIdAcresSuitability(id, acres, suitable) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND acres = ? AND suitability = ?", [id, acres, suitable]);
+        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND acres >= ? AND suitability = ?", [id, acres, suitable]);
         return results;
     }
 
@@ -253,12 +253,12 @@ class land {
     }
 
     async getLandByLocationAcresOwner(zip, acres, owner) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE zip = ? AND acres = ? AND owner = ?", [zip, acres, owner]);
+        const results = await this.DBQuery("SELECT * FROM Land WHERE zip = ? AND acres >= ? AND owner = ?", [zip, acres, owner]);
         return results;
     }
 
     async getLandByLocationAcresSuitability(zip, acres, suitable) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE zip = ? AND acres = ? AND suitability = ?", [zip, acres, suitable]);
+        const results = await this.DBQuery("SELECT * FROM Land WHERE zip = ? AND acres >= ? AND suitability = ?", [zip, acres, suitable]);
         return results;
     }
 
@@ -268,17 +268,17 @@ class land {
     }
 
     async getLandByAcresOwnerSuitability(acres, owner, suitable) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE acres = ? AND owner = ? AND suitability = ?", [acres, owner, suitable]);
+        const results = await this.DBQuery("SELECT * FROM Land WHERE acres >= ? AND owner = ? AND suitability = ?", [acres, owner, suitable]);
         return results;
     }
 
     async getLandByIdLocationAcresOwner(id, zip, acres, owner) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND zip = ? AND acres = ? AND owner = ?", [id, zip, acres, owner]);
+        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND zip = ? AND acres >= ? AND owner = ?", [id, zip, acres, owner]);
         return results;
     }
 
     async getLandByIdLocationAcresSuitability(id, zip, acres, suitable) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND zip = ? AND acres = ? AND suitability = ?", [id, zip, acres, suitable]);
+        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND zip = ? AND acres >= ? AND suitability = ?", [id, zip, acres, suitable]);
         return results;
     }
 
@@ -288,17 +288,17 @@ class land {
     }
 
     async getLandByIdAcresOwnerSuitability(id, acres, owner, suitable) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND acres = ? AND owner = ? AND suitability = ?", [id, acres, owner, suitable]);
+        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND acres >= ? AND owner = ? AND suitability = ?", [id, acres, owner, suitable]);
         return results;
     }
 
     async getLandByLocationAcresOwnerSuitability(zip, acres, owner, suitable) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE zip = ? AND acres = ? AND owner = ? AND suitable = ?", [zip, acres, owner, suitable]);
+        const results = await this.DBQuery("SELECT * FROM Land WHERE zip = ? AND acres >= ? AND owner = ? AND suitable = ?", [zip, acres, owner, suitable]);
         return results;
     }
 
     async getLandByAll(id, zip, acres, owner, suitable) {
-        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND zip = ? AND acres = ? AND owner = ? AND suitability = ?", [id, zip, acres, owner, suitable]);
+        const results = await this.DBQuery("SELECT * FROM Land WHERE ID = ? AND zip = ? AND acres >= ? AND owner = ? AND suitability = ?", [id, zip, acres, owner, suitable]);
         return results;
     }
 }
