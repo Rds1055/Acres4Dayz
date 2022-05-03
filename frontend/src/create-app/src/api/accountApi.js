@@ -89,7 +89,7 @@ export const getUserInfo = () => new Promise((resolve, reject) => {
     axios.get(`${apiEndpoint}/session/`, apiConfig)
         .then(x => resolve(x.data))
         .catch(x => {
-            alert(x);
-            reject(x);
+          alert(x);
+          reject(x);
         });
 });

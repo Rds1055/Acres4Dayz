@@ -9,15 +9,15 @@ export const Settings = ({account, setAccount, token, setToken}) => {
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
 
-  // useEffect(() => {
-  //     getUserInfo().then(x =>
-  //     {
-  //       let test = setLocal(x);
-  //       console.log(test);
-  //       console.log(x);
-  //     }
-  //     );
-  //   }, []);
+  useEffect(() => {
+  console.log(getToken());
+      getUserInfo().then(x =>
+      {
+        let test = setLocal(x);
+        console.log(test);
+      }
+      );
+    }, []);
 
   return <>
   <div className='container text-center mt-5 mb-5'>
