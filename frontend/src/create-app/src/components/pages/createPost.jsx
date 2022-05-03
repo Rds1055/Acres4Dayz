@@ -6,9 +6,12 @@ import farm2 from "../../images/2.jpg";
 import farm3 from "../../images/3.jpg";
 import farm4 from "../../images/4.jpg";
 import farm5 from "../../images/5.jpg";
+import { useNavigate } from 'react-router-dom';
+import { addProduct } from "../../api/accountApi"
 
 export const CreatePost = (props) => {
-  const {setScreen} = props;
+  const navigate = useNavigate();
+  const {account} = props;
 
   const [ title, setTitle ] = useState('');
   const [ description, setDescription ] = useState('');
@@ -16,6 +19,7 @@ export const CreatePost = (props) => {
   const [ suitability, setSuitability ] = useState('');
   const [ image, setImage ] = useState('farm1');
   const [ zip, setZip ] = useState();
+  const [ bid, setBid ] = useState();
 
   return <>
     <div className="container rounded-bottom border">
@@ -31,6 +35,9 @@ export const CreatePost = (props) => {
         </div>
         <div className="col">
           <TextField label="Zip Code" value={zip} setValue={setZip} />
+        </div>
+        <div className="col">
+          <TextField label="Starting Bid" value={bid} setValue={setBid} />
         </div>
       </div>
       <div className="row">
@@ -88,8 +95,9 @@ export const CreatePost = (props) => {
       <div className="row pb-2">
         <div className="col">
           {(title == '' || description == '' || acres == '' || suitability == '' || zip == '') && <button type="button" className="btn btn-md btn-primary" disabled>Submit</button>}
-          {title != '' && description != '' && <btn className="btn btn-primary" onClick={() => {
-            setScreen(1);
+          {title != '' && description != '' && acres != '' && suitability != '' && zip != '' && <btn className="btn btn-primary" onClick={() => {
+            addProduct({acres:acres, owner:account.name, description:description, zip_code:zip, suitable_for:suitability, image:image, zip_bid:bid});
+            navigate('/');
           }}>Submit</btn>}
         </div>
       </div>

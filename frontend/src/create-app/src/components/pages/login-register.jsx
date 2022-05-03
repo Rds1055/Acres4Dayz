@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import {useNavigate} from 'react-router-dom';
 import { login, register } from "../../api/accountApi"
 
-export const Login = ({setAccount}) => {
+export const Login = ({setAccount, setToken}) => {
   const [loginUsername, setLoginUsername] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [registerUsername, setRegisterUsername] = useState('');
@@ -28,9 +28,8 @@ export const Login = ({setAccount}) => {
           {loginUsername !='' && loginPassword != '' &&
           <button type="button" className="btn btn-md btn-primary"
           onClick={() => {
-            let test = login({username:loginUsername, password:loginPassword}, setLoginReq);
-            console.log(test);
-            if(login == "success"){
+            login({username:loginUsername, password:loginPassword}, setLoginReq, setToken);
+            if(loginReq == "success"){
               setAccount({username:loginUsername, password:loginPassword});
               navigate('/');
             }
@@ -45,19 +44,15 @@ export const Login = ({setAccount}) => {
           <TextField label="Confirm Password:" value={registerConfirmPassword} setValue={setRegisterConfirmPassword}/>
           <TextField label="Email:" value={email} setValue={setEmail}/>
           <TextField label="Phone Number:" value={phone} setValue={setPhone}/>
-          {(registerUsername == '' || registerPassword == '') &&
+          {(registerUsername =='' || registerPassword == '' || registerConfirmPassword == '' || email == '' || phone == '' || registerPassword != registerConfirmPassword) &&
           <button type="button" className="btn btn-md btn-primary" disabled>Register</button>}
-          {registerUsername !='' && registerPassword != '' &&
+          {registerUsername !='' && registerPassword != '' && registerConfirmPassword != '' && email != '' && phone != '' && registerPassword == registerConfirmPassword &&
           <button type="button" className="btn btn-md btn-primary"
           onClick={() => {
-            let test;
-            register({username:registerUsername, password:registerPassword, email:email, phone:phone}).then( x =>{
-              test = x;
-            });
-            console.log(test);
+            register({username:registerUsername, password:registerPassword, email:email, phone:phone});
+            login({username:registerUsername, password:registerPassword}, setLoginReq, setToken);
             setAccount({username:registerUsername, password:registerPassword});
             navigate('/');
-
           }}>Register</button>}
         </div>
         <div className='col-2'></div>

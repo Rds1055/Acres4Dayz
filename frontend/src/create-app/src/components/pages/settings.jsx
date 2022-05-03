@@ -1,7 +1,7 @@
 import { TextField } from "../common/textField.jsx";
 import { useEffect, useState } from "react";
 
-export const Settings = ({account, setAccount}) => {
+export const Settings = ({account, setAccount, token, setToken}) => {
   const [userName, setUsername] = useState('');
   const [confirmUserName, setConfirmUserName] = useState('');
   const [password, setPassword] = useState('');

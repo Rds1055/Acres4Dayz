@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const token = '';
+var token = '';
 const apiEndpoint = 'http://localhost:3001';
 const apiConfig = {
     headers: {
@@ -31,6 +31,15 @@ export const getProducts = (params) => new Promise((resolve, reject) => {
         });
 });
 
+export const addProduct = (product) => new Promise((resolve, reject) => {
+    axios.post(`${apiEndpoint}/land/`, product, apiConfig)
+        .then(x => resolve(x.data))
+        .catch(x => {
+            alert(x);
+            reject(x);
+        });
+});
+
 export const addReview = (productId, review) => new Promise((resolve, reject) => {
     axios.post(`${apiEndpoint}/land/${productId}`, review, apiConfig)
         .then(x => resolve(x.data))
@@ -49,20 +58,20 @@ export const register = (user) => new Promise((resolve, reject) => {
         });
 });
 
-export const login = (info, setLogin) => new Promise((resolve, reject) => {
-    axios.get(`${apiEndpoint}/session/`, info, apiConfig)
+export const login = (info, setLogin, setToken) => new Promise((resolve, reject) => {
+    axios.post(`${apiEndpoint}/session/`, info, apiConfig)
         .then(x => {
-          token = x;
-          setLogin('Success');
+          setToken(x.data);
+          resolve(x.data);
+          setLogin('success');
         })
         .catch(x => {
           setLogin('failed');
-          console.log(x);
           reject(x);
         });
 });
 
-export const getUserInfo = (token) => new Promise((resolve, reject) => {
+export const getUserInfo = () => new Promise((resolve, reject) => {
     axios.get(`${apiEndpoint}/session/`, token, apiConfig)
         .then(x => resolve(x.data))
         .catch(x => {
