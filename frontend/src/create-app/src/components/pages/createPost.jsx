@@ -9,11 +9,9 @@ import farm5 from "../../images/5.jpg";
 import { useNavigate } from 'react-router-dom';
 import { addProduct } from "../../api/accountApi"
 
-export const CreatePost = (props) => {
+export const CreatePost = ({account}) => {
   const navigate = useNavigate();
-  const {account} = props;
 
-  const [ title, setTitle ] = useState('');
   const [ description, setDescription ] = useState('');
   const [ acres, setAcres ] = useState();
   const [ suitability, setSuitability ] = useState('');
@@ -24,9 +22,6 @@ export const CreatePost = (props) => {
   return <>
     <div className="container rounded-bottom border">
       <div className="row pt-2">
-        <div className="col">
-          <TextField label="Title" value={title} setValue={setTitle}/>
-        </div>
         <div className="col">
           <TextField label="Acres" value={acres} setValue={setAcres} />
         </div>
@@ -94,9 +89,10 @@ export const CreatePost = (props) => {
       </div>
       <div className="row pb-2">
         <div className="col">
-          {(title == '' || description == '' || acres == '' || suitability == '' || zip == '') && <button type="button" className="btn btn-md btn-primary" disabled>Submit</button>}
-          {title != '' && description != '' && acres != '' && suitability != '' && zip != '' && <btn className="btn btn-primary" onClick={() => {
-            addProduct({acres:acres, owner:account.name, description:description, zip_code:zip, suitable_for:suitability, image:image, zip_bid:bid});
+          {(description == '' || acres == '' || suitability == '' || zip == '' || bid =='') && <button type="button" className="btn btn-md btn-primary" disabled>Submit</button>}
+          {description != '' && acres != '' && suitability != '' && zip != '' && bid != '' && <btn className="btn btn-primary" onClick={() => {
+            console.log(account);
+            addProduct({acres:acres, owner:account.username, description:description, zip_code:zip, suitable_for:suitability, image:image, starting_bid:bid});
             navigate('/');
           }}>Submit</btn>}
         </div>

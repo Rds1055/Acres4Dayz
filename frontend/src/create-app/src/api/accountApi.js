@@ -1,12 +1,16 @@
 import axios from 'axios';
 
-var token = '';
+var token;
 const apiEndpoint = 'http://localhost:3001';
 const apiConfig = {
     headers: {
         Authorization: `Bearer ${token}`
     }
 };
+
+export const getToken = () => {
+  return token;
+}
 
 export const getProductById = (productId) => new Promise((resolve, reject) => {
     axios.get(`${apiEndpoint}/land/${productId}`, apiConfig)
@@ -35,8 +39,9 @@ export const addProduct = (product) => new Promise((resolve, reject) => {
     axios.post(`${apiEndpoint}/land/`, product, apiConfig)
         .then(x => resolve(x.data))
         .catch(x => {
-            alert(x);
-            reject(x);
+          console.log(product);
+          alert(x);
+          reject(x);
         });
 });
 
@@ -58,10 +63,10 @@ export const register = (user) => new Promise((resolve, reject) => {
         });
 });
 
-export const login = (info, setLogin, setToken) => new Promise((resolve, reject) => {
+export const login = (info, setLogin) => new Promise((resolve, reject) => {
     axios.post(`${apiEndpoint}/session/`, info, apiConfig)
         .then(x => {
-          setToken(x.data);
+          token = x.data;
           resolve(x.data);
           setLogin('success');
         })
@@ -71,8 +76,17 @@ export const login = (info, setLogin, setToken) => new Promise((resolve, reject)
         });
 });
 
+export const editUser = (username, params) => new Promise((resolve, reject) =>{
+  axios.put(`${apiEndpoint}/user/${username}`, params, apiConfig)
+  .then(x => resolve(x.data))
+  .catch(x => {
+    alert(x);
+    reject(x);
+  });
+});
+
 export const getUserInfo = () => new Promise((resolve, reject) => {
-    axios.get(`${apiEndpoint}/session/`, token, apiConfig)
+    axios.get(`${apiEndpoint}/session/`, apiConfig)
         .then(x => resolve(x.data))
         .catch(x => {
             alert(x);
