@@ -6,23 +6,22 @@ import farm2 from "../../images/2.jpg";
 import farm3 from "../../images/3.jpg";
 import farm4 from "../../images/4.jpg";
 import farm5 from "../../images/5.jpg";
+import { useNavigate } from 'react-router-dom';
+import { addProduct } from "../../api/accountApi"
 
-export const CreatePost = (props) => {
-  const {setScreen} = props;
+export const CreatePost = ({account}) => {
+  const navigate = useNavigate();
 
-  const [ title, setTitle ] = useState('');
   const [ description, setDescription ] = useState('');
   const [ acres, setAcres ] = useState();
   const [ suitability, setSuitability ] = useState('');
   const [ image, setImage ] = useState('farm1');
   const [ zip, setZip ] = useState();
+  const [ bid, setBid ] = useState();
 
   return <>
     <div className="container rounded-bottom border">
       <div className="row pt-2">
-        <div className="col">
-          <TextField label="Title" value={title} setValue={setTitle}/>
-        </div>
         <div className="col">
           <TextField label="Acres" value={acres} setValue={setAcres} />
         </div>
@@ -31,6 +30,9 @@ export const CreatePost = (props) => {
         </div>
         <div className="col">
           <TextField label="Zip Code" value={zip} setValue={setZip} />
+        </div>
+        <div className="col">
+          <TextField label="Starting Bid" value={bid} setValue={setBid} />
         </div>
       </div>
       <div className="row">
@@ -87,9 +89,11 @@ export const CreatePost = (props) => {
       </div>
       <div className="row pb-2">
         <div className="col">
-          {(title == '' || description == '' || acres == '' || suitability == '' || zip == '') && <button type="button" className="btn btn-md btn-primary" disabled>Submit</button>}
-          {title != '' && description != '' && <btn className="btn btn-primary" onClick={() => {
-            setScreen(1);
+          {(description == '' || acres == '' || suitability == '' || zip == '' || bid =='') && <button type="button" className="btn btn-md btn-primary" disabled>Submit</button>}
+          {description != '' && acres != '' && suitability != '' && zip != '' && bid != '' && <btn className="btn btn-primary" onClick={() => {
+            console.log(account);
+            addProduct({acres:acres, owner:account.username, description:description, zip_code:zip, suitable_for:suitability, image:image, starting_bid:bid});
+            navigate('/');
           }}>Submit</btn>}
         </div>
       </div>

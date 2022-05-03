@@ -1,12 +1,16 @@
 import axios from 'axios';
 
-const token = '';
+var token;
 const apiEndpoint = 'http://localhost:3001';
 const apiConfig = {
     headers: {
         Authorization: `Bearer ${token}`
     }
 };
+
+export const getToken = () => {
+  return token;
+}
 
 export const getProductById = (productId) => new Promise((resolve, reject) => {
     axios.get(`${apiEndpoint}/land/${productId}`, apiConfig)
@@ -31,6 +35,16 @@ export const getProducts = (params) => new Promise((resolve, reject) => {
         });
 });
 
+export const addProduct = (product) => new Promise((resolve, reject) => {
+    axios.post(`${apiEndpoint}/land/`, product, apiConfig)
+        .then(x => resolve(x.data))
+        .catch(x => {
+          console.log(product);
+          alert(x);
+          reject(x);
+        });
+});
+
 export const addReview = (productId, review) => new Promise((resolve, reject) => {
     axios.post(`${apiEndpoint}/land/${productId}`, review, apiConfig)
         .then(x => resolve(x.data))
@@ -50,23 +64,32 @@ export const register = (user) => new Promise((resolve, reject) => {
 });
 
 export const login = (info, setLogin) => new Promise((resolve, reject) => {
-    axios.get(`${apiEndpoint}/session/`, info, apiConfig)
+    axios.post(`${apiEndpoint}/session/`, info, apiConfig)
         .then(x => {
-          token = x;
-          setLogin('Success');
+          token = x.data;
+          resolve(x.data);
+          setLogin('success');
         })
         .catch(x => {
           setLogin('failed');
-          console.log(x);
           reject(x);
         });
 });
 
-export const getUserInfo = (token) => new Promise((resolve, reject) => {
-    axios.get(`${apiEndpoint}/session/`, token, apiConfig)
+export const editUser = (username, params) => new Promise((resolve, reject) =>{
+  axios.put(`${apiEndpoint}/user/${username}`, params, apiConfig)
+  .then(x => resolve(x.data))
+  .catch(x => {
+    alert(x);
+    reject(x);
+  });
+});
+
+export const getUserInfo = () => new Promise((resolve, reject) => {
+    axios.get(`${apiEndpoint}/session/`, apiConfig)
         .then(x => resolve(x.data))
         .catch(x => {
-            alert(x);
-            reject(x);
+          alert(x);
+          reject(x);
         });
 });
