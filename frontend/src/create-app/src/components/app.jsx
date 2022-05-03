@@ -1,23 +1,36 @@
-import { Login } from './pages/login-register.jsx'
-import { Layout } from './pages/layout.jsx'
-import { Main } from './pages/main.jsx'
-import { Product } from './pages/product.jsx'
+import { Login } from './pages/login-register.jsx';
+import { Layout } from './pages/layout.jsx';
+import { Main } from './pages/main.jsx';
+import { Settings } from './pages/settings.jsx';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+
 import { useEffect, useState } from "react";
 import React from 'react';
+import { ListingMini, ListingView} from './pages/listing';
+import { CreatePost } from './pages/createPost.jsx';
+
 
 export const App = () => {
   const [ account, setAccount ] = useState(undefined);
-  const [ screen, setScreen ] = useState(1);
-  function setScreenValue(value){
-    setScreen(value);
-  }
+  const [ product, setProduct] = useState(undefined);
+
   function setAccountValue(value){
     setAccount(value);
   }
   return <>
-    <Layout account = {account} screen={screen} setScreen={setScreenValue}/>
-    {screen == 1 && <Main setScreen = {setScreenValue}/>}
-    {screen == 2 && <Login setAccount={setAccountValue} setScreen={setScreenValue}/>}
-    {screen == 3 && <Product/>}
+    <div className="vh-100 overflow-hidden">
+      <div className="h-100 overflow-scroll">
+        <Router>
+          <Layout account = {account} setAccount={setAccountValue}/>
+          <Routes>
+            <Route path="/" element={<Main setProduct={setProduct}/>} ></Route>
+            <Route path="/login" element={account == undefined? <Login setAccount={setAccount} /> : <Main setProduct={setProduct}/>} ></Route>
+            <Route path="/listing/:listing" element={<ListingView/>} ></Route>
+            <Route path="/settings" element={account != undefined? <Settings account={account} setAccount={setAccount}/> : <Main setProduct={setProduct}/>} ></Route>
+            <Route path="/createPost" element={account != undefined? <CreatePost setAccount={setAccount}/> : <Main setProduct={setProduct}/>} ></Route>
+          </Routes>
+        </Router>
+      </div>
+    </div>
   </>;
 }
